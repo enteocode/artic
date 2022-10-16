@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: icf-api
+    image: node:16.13.0-alpine3.13
+    working_dir: /var/www/html
+    ports:
+      - "80:80"
+    networks:
+      - icf
+    volumes:
+      - .:/var/www/html:cached
+    environment:
+      - NODE_ENV=production
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=icf
+      - MYSQL_PASSWORD=pl$K-?0rX+@i9iNm1im2O}?m84J!_uy?
+      - MYSQL_DATABASE=icf
+    depends_on:
+      - mysql
+      - redis
+    command: npm i && npm run build && npm run serve
+
+  mysql:
+    container_name: icf-mysql
+    image: mysql:8.0.31
+    environment:
+      - MYSQL_ROOT_PASSWORD=E~O9D<+ct}|Wy8>JG43z"k0u,qXed8sY
+      - MYSQL_USER=icf
+      - MYSQL_PASSWORD=pl$K-?0rX+@i9iNm1im2O}?m84J!_uy?
+      - MYSQL_DATABASE=icf
+    networks:
+      - icf
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=caching_sha2_password
+
+networks:
+  icf:
+
+volumes:
+  mysql_data:

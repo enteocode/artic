@@ -1,0 +1,10 @@
+# Source related folders
+
+/node_modules/
+/dist/
+/docs/
+/resources/
+
+# Deployment configuration
+
+/rollup.config.js

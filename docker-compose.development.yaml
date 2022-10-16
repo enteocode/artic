@@ -1,0 +1,18 @@
+version: "3.9"
+
+# Extension of production environment
+
+services:
+  api:
+    environment:
+      - NODE_ENV=development
+      - MYSQL_PASSWORD=dev
+    command: npx rollup -c -w
+
+  mysql:
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_PASSWORD=dev
+
+volumes:
+  mysql_data:

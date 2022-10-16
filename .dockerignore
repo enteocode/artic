@@ -1,0 +1,9 @@
+# Project specific resources
+
+/node_modules/
+/docs/
+/resources/
+
+# Logs
+
+*.log
