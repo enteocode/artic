@@ -6,6 +6,8 @@ services:
   api:
     environment:
       - NODE_ENV=development
+      - UUID_NAMESPACE=d2905a08-1444-406c-8cf4-be3e18d8fe2b
+      - AUTH_SECRET=qK7;hS8_kM3>cS2~oT7.oX4^pI2(iH3+
       - MYSQL_PASSWORD=dev
     command: sh -c "npm i && npx rollup -c -w"
 

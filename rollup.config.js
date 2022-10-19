@@ -62,8 +62,7 @@ export default {
     'cookie-parser',
     'html-minifier-terser',
     'typeorm',
-    'ioredis',
-    'cache-manager-ioredis',
+    'bcrypt',
     'express',
     'rxjs',
     'rxjs/operators'
