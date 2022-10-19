@@ -1,9 +1,14 @@
-import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EnvironmentVariables } from './environment/environment.variables';
+import { Connection } from 'typeorm';
+import { EnvironmentVariables } from './env/environment.variables';
+import { AuthModule } from './auth/auth.module';
+import { User } from './user/user.entity';
+import { AuthTokenInterceptor } from './auth/auth.token.interceptor';
 
-import { validate } from './environment/environment.validation';
+import { validate } from './env/environment.validation';
 
 @Module({
   imports: [
@@ -22,14 +27,25 @@ import { validate } from './environment/environment.validation';
         username: config.get('MYSQL_USER'),
         password: config.get('MYSQL_PASSWORD'),
         database: config.get('MYSQL_DATABASE'),
-        entities: [],
-        retryAttempts: 3,
-
-        // TODO: Change to Migrations for production
-
-        synchronize: true
+        entities: [
+          User
+        ],
+        retryAttempts: 3
       })
-    })
+    }),
+    AuthModule
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuthTokenInterceptor
+    }
   ]
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private readonly connection: Connection) {}
+
+  async onModuleInit() {
+    await this.connection.runMigrations({ transaction: 'each' });
+  }
+}
