@@ -7,9 +7,11 @@ services:
     environment:
       - NODE_ENV=development
       - MYSQL_PASSWORD=dev
-    command: npx rollup -c -w
+    command: sh -c "npm i && npx rollup -c -w"
 
   mysql:
+    ports:
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=toor
       - MYSQL_PASSWORD=dev
