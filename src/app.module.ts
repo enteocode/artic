@@ -7,6 +7,7 @@ import { EnvironmentVariables } from './env/environment.variables';
 import { AuthModule } from './auth/auth.module';
 import { User } from './user/user.entity';
 import { AuthTokenInterceptor } from './auth/auth.token.interceptor';
+import { ArtworkModule } from './artwork/artwork.module';
 
 import { validate } from './env/environment.validation';
 
@@ -33,7 +34,8 @@ import { validate } from './env/environment.validation';
         retryAttempts: 3
       })
     }),
-    AuthModule
+    AuthModule,
+    ArtworkModule
   ],
   providers: [
     {
