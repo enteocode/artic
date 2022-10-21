@@ -27,7 +27,7 @@ services:
     depends_on:
       - mysql
       - redis
-    command: npm i && npm run build && npm run serve
+    command: sh -c "npm i && npm run build && npm run serve"
 
   mysql:
     container_name: icf-mysql
