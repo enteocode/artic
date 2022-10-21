@@ -22,6 +22,8 @@ services:
       - MYSQL_USER=icf
       - MYSQL_PASSWORD=pl$K-?0rX+@i9iNm1im2O}?m84J!_uy?
       - MYSQL_DATABASE=icf
+      - REDIS_HOST=icf-redis
+      - REDIS_PORT=6379
     depends_on:
       - mysql
       - redis
@@ -41,8 +43,17 @@ services:
       - mysql_data:/var/lib/mysql
     command: --default-authentication-plugin=caching_sha2_password
 
+  redis:
+    container_name: icf-redis
+    image: redis:6.2.7-alpine
+    networks:
+      - icf
+    volumes:
+      - redis_data:/data
+
 networks:
   icf:
 
 volumes:
   mysql_data:
+  redis_data:

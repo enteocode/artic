@@ -63,7 +63,9 @@ export default {
     'html-minifier-terser',
     'typeorm',
     'bcrypt',
+    'cache-manager-ioredis',
     'express',
+    'uuid',
     'rxjs',
     'rxjs/operators'
   ],

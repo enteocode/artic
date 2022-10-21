@@ -1,8 +1,9 @@
-import { Controller, Get, Header, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { CacheInterceptor, Controller, Get, Header, Param, ParseIntPipe, Query, UseInterceptors } from '@nestjs/common';
 import { ArtworkService } from './artwork.service';
 import { ArtworkCollectionQuery } from './artwork.collection.query';
 
 @Controller('artworks')
+@UseInterceptors(CacheInterceptor)
 export class ArtworkController {
   constructor(private readonly artwork: ArtworkService) {}
 

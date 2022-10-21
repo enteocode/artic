@@ -39,4 +39,15 @@ export class EnvironmentVariables {
 
   @IsString()
   MYSQL_DATABASE;
+
+  @IsHost()
+  REDIS_HOST: string;
+
+  @IsInt()
+  @Type(() => Number)
+  REDIS_PORT: number;
+
+  @IsOptional()
+  @Type(() => Boolean)
+  REDIS_TLS: boolean = false;
 }

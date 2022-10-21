@@ -18,5 +18,14 @@ services:
       - MYSQL_ROOT_PASSWORD=toor
       - MYSQL_PASSWORD=dev
 
-volumes:
-  mysql_data:
+  redis-commander:
+    container_name: icf-redis-commander
+    image: rediscommander/redis-commander:latest
+    ports:
+      - "8081:8081"
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+    networks:
+      - icf
