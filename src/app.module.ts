@@ -1,5 +1,5 @@
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { Module, OnModuleInit } from '@nestjs/common';
+import { CacheModule, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
@@ -7,8 +7,11 @@ import { EnvironmentVariables } from './env/environment.variables';
 import { AuthModule } from './auth/auth.module';
 import { User } from './user/user.entity';
 import { AuthTokenInterceptor } from './auth/auth.token.interceptor';
+import { ArtworkModule } from './artwork/artwork.module';
 
 import { validate } from './env/environment.validation';
+
+import store from 'cache-manager-ioredis';
 
 @Module({
   imports: [
@@ -33,7 +36,26 @@ import { validate } from './env/environment.validation';
         retryAttempts: 3
       })
     }),
-    AuthModule
+    CacheModule.registerAsync({
+      isGlobal: true,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService<EnvironmentVariables>) => {
+        // Redis does not supports TLS connections by default, but AWS requires
+
+        const tls = config.get('REDIS_TLS') ? {} : null;
+
+        return {
+          store: store as any,
+          host: config.get('REDIS_HOST'),
+          port: config.get('REDIS_PORT'),
+          tls,
+          max: 100,
+          ttl: 86400
+        };
+      }
+    }),
+    AuthModule,
+    ArtworkModule
   ],
   providers: [
     {

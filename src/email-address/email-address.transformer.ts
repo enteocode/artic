@@ -2,7 +2,7 @@ import { ValueTransformer } from 'typeorm';
 
 export const EmailAddressTransformer: ValueTransformer = {
   from(value: string): string {
-    return value
+    return value;
   },
 
   to(value: string): string {
@@ -16,4 +16,4 @@ export const EmailAddressTransformer: ValueTransformer = {
     }
     return base;
   }
-}
+};

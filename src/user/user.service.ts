@@ -16,7 +16,7 @@ export class UserService {
       id: this.getId(username),
       username,
       password
-    }
+    };
   }
 
   getId(username: string): string {

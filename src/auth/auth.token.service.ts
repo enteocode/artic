@@ -20,7 +20,7 @@ export class AuthTokenService {
     }
   }
 
-  getToken(request: Request, cookieName: string = ''): Promise<TokenPayload> {
+  getToken(request: Request, cookieName = ''): Promise<TokenPayload> {
     const header = request.headers.authorization;
     const cookie = request.cookies;
 

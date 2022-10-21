@@ -31,10 +31,7 @@ import { SYMBOL_TOKEN_DECORATOR } from './auth.constants';
   providers: [AuthService, AuthTokenService, AuthRegistryService]
 })
 export class AuthModule implements OnModuleInit {
-  constructor(
-    private readonly registry: AuthRegistryService,
-    private readonly discovery: DiscoveryService
-  ) {}
+  constructor(private readonly registry: AuthRegistryService, private readonly discovery: DiscoveryService) {}
 
   onModuleInit() {
     const controllers = this.discovery.getControllers();

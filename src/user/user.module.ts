@@ -23,10 +23,6 @@ export class UserModule implements OnModuleInit {
 
   onModuleInit() {
     this.connection.subscribers.push(new UserSubscriber(this.password));
-
-    this.connection.migrations.push(
-      new CreateUserTable1665948781134(),
-      new CreateUsers1665949564977(this.user)
-    );
+    this.connection.migrations.push(new CreateUserTable1665948781134(), new CreateUsers1665949564977(this.user));
   }
 }
