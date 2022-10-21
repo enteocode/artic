@@ -9,6 +9,7 @@ import { AuthRegistryService } from './auth.registry.service';
 import { AuthTokenService } from './auth.token.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { AuthUserService } from './auth.user.service';
 import { SYMBOL_TOKEN_DECORATOR } from './auth.constants';
 
 @Module({
@@ -27,8 +28,8 @@ import { SYMBOL_TOKEN_DECORATOR } from './auth.constants';
     UserModule,
     SecurityModule
   ],
-  exports: [AuthService, AuthTokenService, AuthRegistryService],
-  providers: [AuthService, AuthTokenService, AuthRegistryService]
+  exports: [AuthService, AuthTokenService, AuthRegistryService, AuthUserService],
+  providers: [AuthService, AuthTokenService, AuthRegistryService, AuthUserService]
 })
 export class AuthModule implements OnModuleInit {
   constructor(private readonly registry: AuthRegistryService, private readonly discovery: DiscoveryService) {}

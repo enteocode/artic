@@ -8,6 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './user/user.entity';
 import { AuthTokenInterceptor } from './auth/auth.token.interceptor';
 import { ArtworkModule } from './artwork/artwork.module';
+import { FavoriteModule } from './favorite/favorite.module';
+import { Favorite } from './favorite/favorite.entity';
 
 import { validate } from './env/environment.validation';
 
@@ -31,7 +33,8 @@ import store from 'cache-manager-ioredis';
         password: config.get('MYSQL_PASSWORD'),
         database: config.get('MYSQL_DATABASE'),
         entities: [
-          User
+          User,
+          Favorite
         ],
         retryAttempts: 3
       })
@@ -55,7 +58,8 @@ import store from 'cache-manager-ioredis';
       }
     }),
     AuthModule,
-    ArtworkModule
+    ArtworkModule,
+    FavoriteModule
   ],
   providers: [
     {

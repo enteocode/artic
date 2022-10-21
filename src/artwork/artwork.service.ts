@@ -31,16 +31,17 @@ export class ArtworkService {
     if (search) {
       this.url.setSearchParam(url, search);
     }
-    const response = await this.http.axiosRef.get<ArtworkResponseInterface<T>>(url.toString());
+    try {
+      const response = await this.http.axiosRef.get<ArtworkResponseInterface<T>>(url.toString());
 
-    if (response.status >= 400) {
-      throw new HttpException(response.statusText, response.status);
-    }
-    const { data } = response;
+      if (response.data) {
+        return response.data.data;
+      }
+      return null;
+    } catch (e) {
+      const { data: { status, error, detail } } = e.response;
 
-    if (data) {
-      return response.data.data;
+      throw new HttpException(detail || error, status);
     }
-    return null;
   }
 }
