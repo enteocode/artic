@@ -6,26 +6,32 @@ Personal list of favorite art pieces of Art Institute of Chicago (ARTIC).
 ## Requirements
 
 - Node LTS (or above)
-- Docker
 - Redis 6
 - MySQL 8
 
 ## Development
 
-To introduce new features or fix bugs, use the composition file with the 
-development extension. It should be the another way around, but the task
-description described this way to use the production code.
-
-To start development, simply run:
+To start development, copy the `.env.example` file to `.env` and change values according to your setup, then simply run:
 
 ```shell
-$ npm start
+npm i
+npm start
 ```
+
+When all containers are ready and the Nest application has successfully started, you can access the following services 
+on `localhost`, provided you haven't changed the default ports defined in `.env`:
+
+| Name                | Port   | Protocol | Availability                          |
+|---------------------|--------|----------|---------------------------------------|
+| **API**             | `3030` | HTTP     | -                                     |
+| **MySQL**           | `3306` | TCP      | Not publicly accessible in production |
+| **Redis**           | `6379` | TCP      | Not publicly accessible in production |
+| **Redis Commander** | `8081` | HTTP     | Not available in production           |
+
 
 ## Production
 
-To build the optimized version of the source code ready for production and 
-start the server:
+To build the optimized version of the source code ready for production and start the server:
 
 ```shell
 $ docker-compose up
@@ -101,7 +107,7 @@ one call `[DELETE] /api/favorites/{id}`.
 
 ---
 
-Copyright © 2022 by [Ádám Székely][Z], All rights reserved!
+Copyright © 2022-2025 by [Ádám Székely][Z], All rights reserved!
 
 
 [Z]: https://www.linkedin.com/in/enteocode/

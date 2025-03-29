@@ -4,6 +4,10 @@
 /docs/
 /resources/
 
+# Quality Assurance (local)
+
+.husky
+
 # Logs
 
 *.log

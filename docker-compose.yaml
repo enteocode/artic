@@ -2,43 +2,30 @@ version: "3.9"
 
 services:
     api:
-        container_name: artic-api
+        container_name: artic.api
         image: node:lts-alpine3.21
         working_dir: /var/www/html
         user: node
         ports:
             - "3030:3030"
+        env_file:
+            - .env
+        environment:
+            NODE_ENV: production
         networks:
             - artic
         volumes:
             - .:/var/www/html:cached
-        environment:
-            - NODE_ENV=production
-            - SERVER_PORT=3030
-            - UUID_NAMESPACE=b772ebf5-4492-4fae-b0fc-3b3ec5e65b5d
-            - AUTH_SECRET=xEVjrN_k}Rhhx3}TfyI8;w.a+BOdK[48
-            - AUTH_EXPIRE=1800
-            - AUTH_COOKIE=token
-            - MYSQL_HOST=mysql
-            - MYSQL_PORT=3306
-            - MYSQL_USER=artic
-            - MYSQL_PASSWORD=pl$K-?0rX+@i9iNm1im2O}?m84J!_uy?
-            - MYSQL_DATABASE=artic
-            - REDIS_HOST=artic-redis
-            - REDIS_PORT=6379
         depends_on:
             - mysql
             - redis
         command: sh -c "npm i && npm run build && node --enable-source-maps ./dist/app"
 
     mysql:
-        container_name: artic-mysql
+        container_name: artic.mysql
         image: mysql:8.0.31
-        environment:
-            - MYSQL_ROOT_PASSWORD=E~O9D<+ct}|Wy8>JG43z"k0u,qXed8sY
-            - MYSQL_USER=artic
-            - MYSQL_PASSWORD=pl$K-?0rX+@i9iNm1im2O}?m84J!_uy?
-            - MYSQL_DATABASE=artic
+        env_file:
+            - .env
         networks:
             - artic
         volumes:
@@ -46,8 +33,10 @@ services:
         command: --default-authentication-plugin=caching_sha2_password
 
     redis:
-        container_name: artic-redis
+        container_name: artic.redis
         image: redis:6.2.7-alpine
+        env_file:
+            - .env
         networks:
             - artic
         volumes:
