@@ -14,11 +14,11 @@ export type Handler = (token: TokenPayload) => TokenPayload;
 // problem.
 
 export const TokenHandler = createParamDecorator((data: unknown, context: ExecutionContext): Handler => {
-  const response = context.switchToHttp().getResponse<Response>();
+    const response = context.switchToHttp().getResponse<Response>();
 
-  return (token: TokenPayload) => {
-    response.locals[LOCALS_PAYLOAD] = token;
+    return (token: TokenPayload) => {
+        response.locals[LOCALS_PAYLOAD] = token;
 
-    return token;
-  };
+        return token;
+    };
 });

@@ -5,35 +5,35 @@ import { Request } from 'express';
 
 @Injectable()
 export class AuthTokenService {
-  constructor(private readonly jwt: JwtService) {}
+    constructor(private readonly jwt: JwtService) {}
 
-  private async verify(token: string): Promise<TokenPayload> {
-    try {
-      const { name, sub } = await this.jwt.verifyAsync(token);
+    private async verify(token: string): Promise<TokenPayload> {
+        try {
+            const { name, sub } = await this.jwt.verifyAsync(token);
 
-      return {
-        user: sub,
-        name
-      };
-    } catch (e) {
-      return null;
+            return {
+                user: sub,
+                name
+            };
+        } catch (e) {
+            return null;
+        }
     }
-  }
 
-  getToken(request: Request, cookieName = ''): Promise<TokenPayload> {
-    const header = request.headers.authorization;
-    const cookie = request.cookies;
+    getToken(request: Request, cookieName = ''): Promise<TokenPayload> {
+        const header = request.headers.authorization;
+        const cookie = request.cookies;
 
-    if (header && header.substring(0, 6) === 'Bearer') {
-      return this.verify(header.substring(7));
+        if (header && header.substring(0, 6) === 'Bearer') {
+            return this.verify(header.substring(7));
+        }
+        if (cookie && cookieName) {
+            return this.verify(cookie[cookieName]);
+        }
+        return null;
     }
-    if (cookie && cookieName) {
-      return this.verify(cookie[cookieName]);
-    }
-    return null;
-  }
 
-  sign({ user, name }: TokenPayload): string {
-    return this.jwt.sign({ name }, { subject: user });
-  }
+    sign({ user, name }: TokenPayload): string {
+        return this.jwt.sign({ name }, { subject: user });
+    }
 }

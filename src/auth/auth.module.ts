@@ -13,37 +13,40 @@ import { AuthUserService } from './auth.user.service';
 import { SYMBOL_TOKEN_DECORATOR } from './auth.constants';
 
 @Module({
-  controllers: [AuthController],
-  imports: [
-    JwtModule.registerAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService<EnvironmentVariables>) => ({
-        secret: config.get('AUTH_SECRET'),
-        signOptions: {
-          expiresIn: config.get('AUTH_EXPIRE')
-        }
-      })
-    }),
-    DiscoveryModule,
-    UserModule,
-    SecurityModule
-  ],
-  exports: [AuthService, AuthTokenService, AuthRegistryService, AuthUserService],
-  providers: [AuthService, AuthTokenService, AuthRegistryService, AuthUserService]
+    controllers: [AuthController],
+    imports: [
+        JwtModule.registerAsync({
+            inject: [ConfigService],
+            useFactory: (config: ConfigService<EnvironmentVariables>) => ({
+                secret: config.get('AUTH_SECRET'),
+                signOptions: {
+                    expiresIn: config.get('AUTH_EXPIRE')
+                }
+            })
+        }),
+        DiscoveryModule,
+        UserModule,
+        SecurityModule
+    ],
+    exports: [AuthService, AuthTokenService, AuthRegistryService, AuthUserService],
+    providers: [AuthService, AuthTokenService, AuthRegistryService, AuthUserService]
 })
 export class AuthModule implements OnModuleInit {
-  constructor(private readonly registry: AuthRegistryService, private readonly discovery: DiscoveryService) {}
+    constructor(
+        private readonly registry: AuthRegistryService,
+        private readonly discovery: DiscoveryService
+    ) {}
 
-  onModuleInit() {
-    const controllers = this.discovery.getControllers();
+    onModuleInit() {
+        const controllers = this.discovery.getControllers();
 
-    controllers.forEach(({ instance, metatype }) => {
-      const meta = Reflect.getMetadata(SYMBOL_TOKEN_DECORATOR, metatype);
+        controllers.forEach(({ instance, metatype }) => {
+            const meta = Reflect.getMetadata(SYMBOL_TOKEN_DECORATOR, metatype);
 
-      if (!meta) {
-        return;
-      }
-      this.registry.register(instance.constructor);
-    });
-  }
+            if (!meta) {
+                return;
+            }
+            this.registry.register(instance.constructor);
+        });
+    }
 }

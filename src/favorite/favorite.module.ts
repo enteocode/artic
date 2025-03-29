@@ -8,15 +8,15 @@ import { Connection } from 'typeorm';
 import { CreateFavoriteTable1666336937431 } from './migrations/1666336937431-CreateFavoriteTable';
 
 @Module({
-  controllers: [FavoriteController],
-  imports: [UuidModule, AuthModule],
-  exports: [FavoriteService],
-  providers: [FavoriteService]
+    controllers: [FavoriteController],
+    imports: [UuidModule, AuthModule],
+    exports: [FavoriteService],
+    providers: [FavoriteService]
 })
 export class FavoriteModule implements OnModuleInit {
-  constructor(private readonly connection: Connection) {}
+    constructor(private readonly connection: Connection) {}
 
-  onModuleInit() {
-    this.connection.migrations.push(new CreateFavoriteTable1666336937431());
-  }
+    onModuleInit() {
+        this.connection.migrations.push(new CreateFavoriteTable1666336937431());
+    }
 }

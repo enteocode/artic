@@ -7,41 +7,46 @@ import { UrlSearchInterface } from '../url/url.search.interface';
 
 @Injectable()
 export class ArtworkService {
-  private readonly fields: string[] = ['id', 'title', 'artist_titles', 'thumbnail'];
+    private readonly fields: string[] = ['id', 'title', 'artist_titles', 'thumbnail'];
 
-  constructor(private readonly http: HttpService, private readonly url: UrlService) {}
+    constructor(
+        private readonly http: HttpService,
+        private readonly url: UrlService
+    ) {}
 
-  get(id: number) {
-    return this.getResponse(`artworks/${id}`);
-  }
-
-  getAll(take?: number, page?: number): Promise<ArtworkInterface[]> {
-    return this.getResponse<ArtworkInterface[]>('artworks', { limit: String(take), page: String(page) });
-  }
-
-  private async getResponse<T>(endpoint: string, search: UrlSearchInterface = null): Promise<T> {
-    const url = new URL(`https://api.artic.edu/api/v1/${endpoint}`);
-
-    // Narrowing down response fields
-
-    this.url.setSearchParam(url, { fields: this.fields });
-
-    // Custom queries
-
-    if (search) {
-      this.url.setSearchParam(url, search);
+    get(id: number) {
+        return this.getResponse(`artworks/${id}`);
     }
-    try {
-      const response = await this.http.axiosRef.get<ArtworkResponseInterface<T>>(url.toString());
 
-      if (response.data) {
-        return response.data.data;
-      }
-      return null;
-    } catch (e) {
-      const { data: { status, error, detail } } = e.response;
-
-      throw new HttpException(detail || error, status);
+    getAll(take?: number, page?: number): Promise<ArtworkInterface[]> {
+        return this.getResponse<ArtworkInterface[]>('artworks', { limit: String(take), page: String(page) });
     }
-  }
+
+    private async getResponse<T>(endpoint: string, search: UrlSearchInterface = null): Promise<T> {
+        const url = new URL(`https://api.artic.edu/api/v1/${endpoint}`);
+
+        // Narrowing down response fields
+
+        this.url.setSearchParam(url, { fields: this.fields });
+
+        // Custom queries
+
+        if (search) {
+            this.url.setSearchParam(url, search);
+        }
+        try {
+            const response = await this.http.axiosRef.get<ArtworkResponseInterface<T>>(url.toString());
+
+            if (response.data) {
+                return response.data.data;
+            }
+            return null;
+        } catch (e) {
+            const {
+                data: { status, error, detail }
+            } = e.response;
+
+            throw new HttpException(detail || error, status);
+        }
+    }
 }

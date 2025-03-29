@@ -1,1 +1,1 @@
-export interface UrlSearchInterface extends Record<string, string | string []> {}
+export interface UrlSearchInterface extends Record<string, string | string[]> {}

@@ -5,13 +5,13 @@ import { UserInterface } from '../user/user.interface';
 @Entity()
 @Index(['user', 'artwork'], { unique: true })
 export class Favorite implements FavoriteInterface {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-  @ManyToOne('User', { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user' })
-  user: UserInterface;
+    @ManyToOne('User', { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'user' })
+    user: UserInterface;
 
-  @Column({ type: 'integer', unsigned: true })
-  artwork: number;
+    @Column({ type: 'integer', unsigned: true })
+    artwork: number;
 }

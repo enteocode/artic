@@ -4,50 +4,50 @@ import { Type } from 'class-transformer';
 import { IsHost } from '../url/url.host.validator';
 
 export class EnvironmentVariables {
-  @IsEnum(Environment)
-  NODE_ENV: Environment = Environment.PRODUCTION;
+    @IsEnum(Environment)
+    NODE_ENV: Environment = Environment.PRODUCTION;
 
-  @IsOptional()
-  @IsUUID()
-  UUID_NAMESPACE = '4296c584-fc14-4040-9ce5-98bb0f091550';
+    @IsOptional()
+    @IsUUID()
+    UUID_NAMESPACE = '4296c584-fc14-4040-9ce5-98bb0f091550';
 
-  @IsString()
-  @MinLength(32)
-  AUTH_SECRET;
+    @IsString()
+    @MinLength(32)
+    AUTH_SECRET;
 
-  @IsOptional()
-  @IsInt()
-  @Type(() => Number)
-  AUTH_EXPIRE = 300;
+    @IsOptional()
+    @IsInt()
+    @Type(() => Number)
+    AUTH_EXPIRE = 300;
 
-  @IsOptional()
-  @IsString()
-  AUTH_COOKIE = '';
+    @IsOptional()
+    @IsString()
+    AUTH_COOKIE = '';
 
-  @IsHost()
-  MYSQL_HOST;
+    @IsHost()
+    MYSQL_HOST;
 
-  @IsInt()
-  @Type(() => Number)
-  MYSQL_PORT;
+    @IsInt()
+    @Type(() => Number)
+    MYSQL_PORT;
 
-  @IsString()
-  MYSQL_USER;
+    @IsString()
+    MYSQL_USER;
 
-  @IsString()
-  MYSQL_PASSWORD;
+    @IsString()
+    MYSQL_PASSWORD;
 
-  @IsString()
-  MYSQL_DATABASE;
+    @IsString()
+    MYSQL_DATABASE;
 
-  @IsHost()
-  REDIS_HOST: string;
+    @IsHost()
+    REDIS_HOST: string;
 
-  @IsInt()
-  @Type(() => Number)
-  REDIS_PORT: number;
+    @IsInt()
+    @Type(() => Number)
+    REDIS_PORT: number;
 
-  @IsOptional()
-  @Type(() => Boolean)
-  REDIS_TLS: boolean = false;
+    @IsOptional()
+    @Type(() => Boolean)
+    REDIS_TLS: boolean = false;
 }

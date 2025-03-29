@@ -25,53 +25,53 @@ const isProduction = process.env.NODE_ENV === 'production';
  * @private
  */
 const getPlugins = (isProduction) => {
-  const plugins = [typescript()];
+    const plugins = [typescript()];
 
-  if (isProduction) {
-    plugins.push(terser({ keep_classnames: true, toplevel: true }));
-  } else {
-    plugins.push(run({ args: ['--enable-source-maps'] }));
-  }
-  return plugins;
+    if (isProduction) {
+        plugins.push(terser({ keep_classnames: true, toplevel: true }));
+    } else {
+        plugins.push(run({ args: ['--enable-source-maps'] }));
+    }
+    return plugins;
 };
 
 /**
  * @private
  */
 const getTarget = (isProduction) => {
-  return isProduction ? './dist/app.js' : './dist/dev.js';
+    return isProduction ? './dist/app.js' : './dist/dev.js';
 };
 
 // Configuration
 
 export default {
-  input: './src/main.ts',
-  output: {
-    file: getTarget(isProduction),
-    format: 'es',
-    sourcemapExcludeSources: true,
-    sourcemap: true,
-    validate: true
-  },
-  external: [
-    /^@nestjs\//,
+    input: './src/main.ts',
+    output: {
+        file: getTarget(isProduction),
+        format: 'es',
+        sourcemapExcludeSources: true,
+        sourcemap: true,
+        validate: true
+    },
+    external: [
+        /^@nestjs\//,
 
-    'helmet',
-    'class-transformer',
-    'class-validator',
-    'cookie-parser',
-    'html-minifier-terser',
-    'typeorm',
-    'bcrypt',
-    'cache-manager-ioredis',
-    'express',
-    'uuid',
-    'rxjs',
-    'rxjs/operators'
-  ],
-  watch: {
-    buildDelay: 600
-  },
-  plugins: getPlugins(isProduction),
-  cache
+        'helmet',
+        'class-transformer',
+        'class-validator',
+        'cookie-parser',
+        'html-minifier-terser',
+        'typeorm',
+        'bcrypt',
+        'cache-manager-ioredis',
+        'express',
+        'uuid',
+        'rxjs',
+        'rxjs/operators'
+    ],
+    watch: {
+        buildDelay: 600
+    },
+    plugins: getPlugins(isProduction),
+    cache
 };

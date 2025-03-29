@@ -7,42 +7,47 @@ import { FavoriteInterface } from './favorite.interface';
 
 @Injectable()
 export class FavoriteService {
-  private readonly logger = new Logger(FavoriteService.name);
+    private readonly logger = new Logger(FavoriteService.name);
 
-  constructor(private readonly manager: EntityManager, private readonly uuid: UuidService) {}
+    constructor(
+        private readonly manager: EntityManager,
+        private readonly uuid: UuidService
+    ) {}
 
-  create(user: UserInterface, artwork: number): FavoriteInterface {
-    return {
-      id: this.uuid.create(`${user.id}:${artwork}`),
-      user,
-      artwork
-    };
-  }
-
-  async add(user: UserInterface, artwork: number): Promise<FavoriteInterface> {
-    const favorite = this.create(user, artwork);
-
-    try {
-      await this.manager.insert(Favorite, favorite);
-    } catch (e) {
-      if (false === e instanceof QueryFailedError) {
-        throw e;
-      }
-      this.logger.warn(`User#${user.id} tried to add Artwork#${artwork} to the favorites, which is already persisted`);
+    create(user: UserInterface, artwork: number): FavoriteInterface {
+        return {
+            id: this.uuid.create(`${user.id}:${artwork}`),
+            user,
+            artwork
+        };
     }
-    return favorite;
-  }
 
-  async get(user: UserInterface): Promise<number[]> {
-    const list = await this.manager.find(Favorite, { select: ['artwork'], where: { user } });
+    async add(user: UserInterface, artwork: number): Promise<FavoriteInterface> {
+        const favorite = this.create(user, artwork);
 
-    return list.map(({ artwork }) => artwork)
-  }
+        try {
+            await this.manager.insert(Favorite, favorite);
+        } catch (e) {
+            if (false === e instanceof QueryFailedError) {
+                throw e;
+            }
+            this.logger.warn(
+                `User#${user.id} tried to add Artwork#${artwork} to the favorites, which is already persisted`
+            );
+        }
+        return favorite;
+    }
 
-  async remove(user: UserInterface, artwork: number): Promise<boolean> {
-    const entity = this.create(user, artwork);
-    const result = await this.manager.delete(Favorite, entity.id);
+    async get(user: UserInterface): Promise<number[]> {
+        const list = await this.manager.find(Favorite, { select: ['artwork'], where: { user } });
 
-    return Boolean(result.affected);
-  }
+        return list.map(({ artwork }) => artwork);
+    }
+
+    async remove(user: UserInterface, artwork: number): Promise<boolean> {
+        const entity = this.create(user, artwork);
+        const result = await this.manager.delete(Favorite, entity.id);
+
+        return Boolean(result.affected);
+    }
 }

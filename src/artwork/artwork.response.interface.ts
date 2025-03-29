@@ -1,3 +1,3 @@
 export interface ArtworkResponseInterface<T> {
-  data: T;
+    data: T;
 }

@@ -11,17 +11,17 @@ import cookie from 'cookie-parser';
 const BODY_LIMIT = 32e6;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('api');
-  app.useGlobalPipes(new ValidationPipe({ transform: true, forbidUnknownValues: true }));
+    app.setGlobalPrefix('api');
+    app.useGlobalPipes(new ValidationPipe({ transform: true, forbidUnknownValues: true }));
 
-  app.use(helmet());
-  app.use(cookie());
-  app.use(urlencoded({ extended: true, limit: BODY_LIMIT }));
-  app.use(json({ limit: BODY_LIMIT }));
+    app.use(helmet());
+    app.use(cookie());
+    app.use(urlencoded({ extended: true, limit: BODY_LIMIT }));
+    app.use(json({ limit: BODY_LIMIT }));
 
-  await app.listen(80, '0.0.0.0');
+    await app.listen(80, '0.0.0.0');
 }
 
 void bootstrap();

@@ -10,19 +10,19 @@ import { CreateUserTable1665948781134 } from './migrations/1665948781134-CreateU
 import { CreateUsers1665949564977 } from './migrations/1665949564977-CreateUsers';
 
 @Module({
-  imports: [UuidModule, SecurityModule],
-  exports: [UserService],
-  providers: [UserService]
+    imports: [UuidModule, SecurityModule],
+    exports: [UserService],
+    providers: [UserService]
 })
 export class UserModule implements OnModuleInit {
-  constructor(
-    private readonly connection: Connection,
-    private readonly user: UserService,
-    private readonly password: SecurityPasswordService
-  ) {}
+    constructor(
+        private readonly connection: Connection,
+        private readonly user: UserService,
+        private readonly password: SecurityPasswordService
+    ) {}
 
-  onModuleInit() {
-    this.connection.subscribers.push(new UserSubscriber(this.password));
-    this.connection.migrations.push(new CreateUserTable1665948781134(), new CreateUsers1665949564977(this.user));
-  }
+    onModuleInit() {
+        this.connection.subscribers.push(new UserSubscriber(this.password));
+        this.connection.migrations.push(new CreateUserTable1665948781134(), new CreateUsers1665949564977(this.user));
+    }
 }

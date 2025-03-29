@@ -6,15 +6,15 @@ import { EmailAddressTransformer } from '../email-address/email-address.transfor
 
 @Entity()
 export class User implements UserInterface {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-  @Column({ type: 'varchar', transformer: EmailAddressTransformer })
-  @Index({ unique: true })
-  @IsEmail({ allow_display_name: false, allow_utf8_local_part: false })
-  username: string;
+    @Column({ type: 'varchar', transformer: EmailAddressTransformer })
+    @Index({ unique: true })
+    @IsEmail({ allow_display_name: false, allow_utf8_local_part: false })
+    username: string;
 
-  @Column({ type: 'char', length: 60 })
-  @Exclude()
-  password: string;
+    @Column({ type: 'char', length: 60 })
+    @Exclude()
+    password: string;
 }
