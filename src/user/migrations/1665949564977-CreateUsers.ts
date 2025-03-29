@@ -8,27 +8,14 @@ export class CreateUsers1665949564977 implements MigrationInterface {
     constructor(private readonly user: UserService) {}
 
     public async up(queryRunner: QueryRunner) {
-        const list = this.getUsernames();
-        const pass = 'password';
-
-        await queryRunner.manager.insert(
-            User,
-            list.map((user) => {
-                return this.user.create(user, pass);
-            })
-        );
+        await queryRunner.manager.insert(User, this.user.create(this.getUsername(), 'password'));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        const list = this.getUsernames();
-
-        await queryRunner.manager.delete(
-            User,
-            list.map((user) => this.user.getId(user))
-        );
+        await queryRunner.manager.delete(User, this.user.getId(this.getUsername()));
     }
 
-    private getUsernames(): string[] {
-        return ['user1@email.com', 'user2@email.com'];
+    private getUsername(): string {
+        return 'user@email.com';
     }
 }

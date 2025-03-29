@@ -11,6 +11,9 @@ export const EmailAddressTransformer: ValueTransformer = {
         }
         const base = value.toLowerCase();
 
+        // Removing mailing list annotations to prevent multiple account registrations
+        // with the same address
+
         if (base.includes('+')) {
             return base.replace(/\+[^@]+/, '');
         }

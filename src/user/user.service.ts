@@ -28,7 +28,7 @@ export class UserService {
 
     async getByUsername(username: string): Promise<UserInterface> {
         const uuid = this.getId(username);
-        const user = await this.manager.findOne(User, uuid);
+        const user = await this.manager.findOne(User, { where: { id: uuid }, cache: 60 });
 
         if (!user) {
             throw new NotFoundException('User does not exists');

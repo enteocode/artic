@@ -2,18 +2,19 @@ version: "3.9"
 
 services:
     api:
-        container_name: icf-api
-        image: node:16.13.0-alpine3.13
+        container_name: artic-api
+        image: node:lts-alpine3.21
         working_dir: /var/www/html
         user: node
         ports:
-            - "80:80"
+            - "3030:3030"
         networks:
-            - icf
+            - artic
         volumes:
             - .:/var/www/html:cached
         environment:
             - NODE_ENV=production
+            - SERVER_PORT=3030
             - UUID_NAMESPACE=b772ebf5-4492-4fae-b0fc-3b3ec5e65b5d
             - AUTH_SECRET=xEVjrN_k}Rhhx3}TfyI8;w.a+BOdK[48
             - AUTH_EXPIRE=1800

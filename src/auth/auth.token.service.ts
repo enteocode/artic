@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from './auth.token.payload';
-import { Request } from 'express';
+import { FastifyRequest as Request } from 'fastify';
 
 @Injectable()
 export class AuthTokenService {

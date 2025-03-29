@@ -8,37 +8,46 @@ export class EnvironmentVariables {
     NODE_ENV: Environment = Environment.PRODUCTION;
 
     @IsOptional()
+    @IsHost()
+    SERVER_HOST: string = '0.0.0.0';
+
+    @IsOptional()
+    @IsInt()
+    @Type(() => Number)
+    SERVER_PORT: number = 3030;
+
+    @IsOptional()
     @IsUUID()
-    UUID_NAMESPACE = '4296c584-fc14-4040-9ce5-98bb0f091550';
+    UUID_NAMESPACE: string = '4296c584-fc14-4040-9ce5-98bb0f091550';
 
     @IsString()
     @MinLength(32)
-    AUTH_SECRET;
+    AUTH_SECRET: string;
 
     @IsOptional()
     @IsInt()
     @Type(() => Number)
-    AUTH_EXPIRE = 300;
+    AUTH_EXPIRE: number = 300;
 
     @IsOptional()
     @IsString()
-    AUTH_COOKIE = '';
+    AUTH_COOKIE: string = '';
 
     @IsHost()
-    MYSQL_HOST;
+    MYSQL_HOST: string;
 
     @IsInt()
     @Type(() => Number)
-    MYSQL_PORT;
+    MYSQL_PORT: number;
 
     @IsString()
-    MYSQL_USER;
+    MYSQL_USER: string;
 
     @IsString()
-    MYSQL_PASSWORD;
+    MYSQL_PASSWORD: string;
 
     @IsString()
-    MYSQL_DATABASE;
+    MYSQL_DATABASE: string;
 
     @IsHost()
     REDIS_HOST: string;

@@ -1,2 +1,2 @@
-export const SYMBOL_TOKEN_DECORATOR = Symbol();
-export const LOCALS_PAYLOAD = '@icf/auth:token';
+export const SYMBOL_AUTH_DISABLED = Symbol();
+export const SYMBOL_TOKEN = Symbol();

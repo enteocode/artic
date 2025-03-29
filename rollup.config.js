@@ -1,6 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
 import run from '@rollup/plugin-run';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 
 /*
  * Build Process (Rollup)
@@ -55,16 +55,16 @@ export default {
     },
     external: [
         /^@nestjs\//,
+        /^@fastify/,
 
         'helmet',
         'class-transformer',
         'class-validator',
-        'cookie-parser',
-        'html-minifier-terser',
         'typeorm',
         'bcrypt',
         'cache-manager-ioredis',
-        'express',
+        'fastify',
+        'ioredis',
         'uuid',
         'rxjs',
         'rxjs/operators'

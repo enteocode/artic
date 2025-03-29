@@ -2,11 +2,19 @@
 .idea
 .vscode
 
+# Environment variables
+
+.env
+
 # Directories
 
 /coverage
 /dist
 /node_modules
+
+# CI/CD
+
+.husky
 
 # Tests
 

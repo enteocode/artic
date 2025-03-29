@@ -1,8 +1,9 @@
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { CacheModule, Module, OnModuleInit } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { EnvironmentVariables } from './env/environment.variables';
 import { AuthModule } from './auth/auth.module';
 import { User } from './user/user.entity';
@@ -45,7 +46,7 @@ import store from 'cache-manager-ioredis';
                 const tls = config.get('REDIS_TLS') ? {} : null;
 
                 return {
-                    store: store as any,
+                    store,
                     host: config.get('REDIS_HOST'),
                     port: config.get('REDIS_PORT'),
                     tls,
@@ -66,7 +67,7 @@ import store from 'cache-manager-ioredis';
     ]
 })
 export class AppModule implements OnModuleInit {
-    constructor(private readonly connection: Connection) {}
+    constructor(private readonly connection: DataSource) {}
 
     async onModuleInit() {
         await this.connection.runMigrations({ transaction: 'each' });

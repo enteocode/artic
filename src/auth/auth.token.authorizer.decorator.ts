@@ -1,9 +1,9 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Response } from 'express';
+import { FastifyReply as Response } from 'fastify';
 import { TokenPayload } from './auth.token.payload';
-import { LOCALS_PAYLOAD } from './auth.constants';
+import { SYMBOL_TOKEN } from './auth.constants';
 
-export type Handler = (token: TokenPayload) => TokenPayload;
+export type Authorizer = (token: TokenPayload) => TokenPayload;
 
 // ATTENTION
 //
@@ -13,11 +13,11 @@ export type Handler = (token: TokenPayload) => TokenPayload;
 // As we are setting a COOKIE in the interceptor, sent headers are causing a
 // problem.
 
-export const TokenHandler = createParamDecorator((data: unknown, context: ExecutionContext): Handler => {
+export const TokenAuthorizer = createParamDecorator((data: unknown, context: ExecutionContext): Authorizer => {
     const response = context.switchToHttp().getResponse<Response>();
 
     return (token: TokenPayload) => {
-        response.locals[LOCALS_PAYLOAD] = token;
+        Reflect.defineMetadata(SYMBOL_TOKEN, token, response);
 
         return token;
     };

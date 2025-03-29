@@ -15,11 +15,11 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
     }
 
     async beforeUpdate({ entity, updatedColumns }: UpdateEvent<User>) {
-        const updated = updatedColumns.some(({ propertyName }) => propertyName === 'pass');
+        const updated = updatedColumns.some(({ propertyName }) => propertyName === 'password');
 
         if (!updated) {
             return;
         }
-        entity.pass = await this.password.encrypt(entity.pass);
+        entity.password = await this.password.encrypt(entity.password);
     }
 }

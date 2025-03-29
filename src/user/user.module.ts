@@ -1,6 +1,6 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { SecurityPasswordService } from '../security/security.password.service';
 import { UserSubscriber } from './user.subscriber';
 import { UuidModule } from '../uuid/uuid.module';
@@ -16,7 +16,7 @@ import { CreateUsers1665949564977 } from './migrations/1665949564977-CreateUsers
 })
 export class UserModule implements OnModuleInit {
     constructor(
-        private readonly connection: Connection,
+        private readonly connection: DataSource,
         private readonly user: UserService,
         private readonly password: SecurityPasswordService
     ) {}

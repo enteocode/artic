@@ -1,6 +1,6 @@
 import { SetMetadata } from '@nestjs/common';
-import { SYMBOL_TOKEN_DECORATOR } from './auth.constants';
+import { SYMBOL_AUTH_DISABLED } from './auth.constants';
 
 export const DisableAuthentication = () => {
-    return SetMetadata(SYMBOL_TOKEN_DECORATOR, true);
+    return SetMetadata(SYMBOL_AUTH_DISABLED, true);
 };

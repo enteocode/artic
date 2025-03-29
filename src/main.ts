@@ -1,27 +1,30 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
-import { json, urlencoded } from 'express';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import { ConfigService } from '@nestjs/config';
+import { EnvironmentVariables } from './env/environment.variables';
 
-import helmet from 'helmet';
-import cookie from 'cookie-parser';
-
-// The input body size limit (in bytes)
-
-const BODY_LIMIT = 32e6;
+import helmet from '@fastify/helmet';
+import cookie from '@fastify/cookie';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 
     app.setGlobalPrefix('api');
     app.useGlobalPipes(new ValidationPipe({ transform: true, forbidUnknownValues: true }));
 
-    app.use(helmet());
-    app.use(cookie());
-    app.use(urlencoded({ extended: true, limit: BODY_LIMIT }));
-    app.use(json({ limit: BODY_LIMIT }));
+    const config = app.get(ConfigService<EnvironmentVariables>);
 
-    await app.listen(80, '0.0.0.0');
+    await app.register(cookie, { secret: config.get<string>('AUTH_SECRET') });
+    await app.register(helmet);
+
+    // Starting the server
+
+    const host = config.get('SERVER_HOST');
+    const port = config.get('SERVER_PORT');
+
+    await app.listen(port, host);
 }
 
 void bootstrap();

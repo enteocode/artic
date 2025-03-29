@@ -1,11 +1,11 @@
-ICF Technology Backend Trial Test
+ARTIC (Example NestJS Application)
 =================================
 
 Personal list of favorite art pieces of Art Institute of Chicago (ARTIC).
 
 ## Requirements
 
-- Node LTS 16.13 (or above)
+- Node LTS (or above)
 - Docker
 - Redis 6
 - MySQL 8

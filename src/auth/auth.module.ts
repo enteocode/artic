@@ -10,7 +10,7 @@ import { AuthTokenService } from './auth.token.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { AuthUserService } from './auth.user.service';
-import { SYMBOL_TOKEN_DECORATOR } from './auth.constants';
+import { SYMBOL_AUTH_DISABLED } from './auth.constants';
 
 @Module({
     controllers: [AuthController],
@@ -41,7 +41,7 @@ export class AuthModule implements OnModuleInit {
         const controllers = this.discovery.getControllers();
 
         controllers.forEach(({ instance, metatype }) => {
-            const meta = Reflect.getMetadata(SYMBOL_TOKEN_DECORATOR, metatype);
+            const meta = Reflect.getMetadata(SYMBOL_AUTH_DISABLED, metatype);
 
             if (!meta) {
                 return;
