@@ -14,8 +14,7 @@ export class AuthController {
         const user = await this.service.getUserAuthenticated(username, password);
 
         return authorize({
-            user: user.id,
-            name: user.username
+            user: user.id
         });
     }
 
