@@ -1,5 +1,5 @@
 import { Environment } from './environment.enum';
-import { IsEnum, IsInt, IsOptional, IsString, IsUUID, MinLength } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString, IsUUID, Min, MinLength } from 'class-validator';
 import { Type } from 'class-transformer';
 import { IsHost } from '../url/url.host.validator';
 
@@ -31,6 +31,7 @@ export class EnvironmentVariables {
     @IsOptional()
     @IsInt()
     @Type(() => Number)
+    @Min(1)
     AUTH_EXPIRE: number = 300;
 
     @IsOptional()

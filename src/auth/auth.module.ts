@@ -11,31 +11,28 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { AuthUserService } from './auth.user.service';
 import { UuidModule } from '../uuid/uuid.module';
-import { UuidService } from '../uuid/uuid.service';
+import { CacheModule } from '../cache/cache.module';
 import { SYMBOL_AUTH_DISABLED } from './auth.constants';
 
 @Module({
     controllers: [AuthController],
     imports: [
         JwtModule.registerAsync({
-            imports: [ConfigModule, UuidModule],
-            inject: [ConfigService, UuidService],
-            useFactory: (config: ConfigService<EnvironmentVariables>, uuid: UuidService) => ({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (config: ConfigService<EnvironmentVariables>) => ({
                 secret: config.get('AUTH_SECRET'),
                 signOptions: {
                     algorithm: 'HS256',
                     issuer: config.get('AUTH_ISSUER'),
-                    expiresIn: config.get('AUTH_EXPIRE'),
-
-                    // A unique identifier for all key is important due to blacklisting
-                    // between the nodes
-
-                    keyid: uuid.create()
+                    expiresIn: config.get('AUTH_EXPIRE')
                 }
             })
         }),
         ConfigModule,
+        CacheModule,
         DiscoveryModule,
+        UuidModule,
         UserModule,
         SecurityModule
     ],

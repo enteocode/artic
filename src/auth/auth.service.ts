@@ -10,7 +10,7 @@ export class AuthService {
         private readonly password: SecurityPasswordService
     ) {}
 
-    async getUserAuthenticated(username: string, password: string): Promise<User> {
+    public async getUserAuthenticated(username: string, password: string): Promise<User> {
         if (!password) {
             throw new ConflictException('Invalid password');
         }
