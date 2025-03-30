@@ -1,5 +1,5 @@
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { Module, OnModuleInit } from '@nestjs/common';
+import { ClassSerializerInterceptor, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
@@ -42,6 +42,10 @@ import { validate } from './env/environment.validation';
         {
             provide: APP_INTERCEPTOR,
             useClass: AuthTokenInterceptor
+        },
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: ClassSerializerInterceptor
         }
     ]
 })
