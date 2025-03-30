@@ -84,6 +84,7 @@ export class AuthTokenInterceptor implements NestInterceptor {
                     res.cookie(cookie, signed, {
                         secure: this.isSecure(req),
                         httpOnly: true,
+                        path: '/',
                         expires: new Date(expire * 1000 + Date.now()),
                         sameSite: 'strict'
                     });
