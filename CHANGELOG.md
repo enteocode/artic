@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/enteocode/icf/compare/v1.0.0...v2.0.0) (2025-03-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgraded dependencies to eliminate security and performance issues
+
+### Features
+
+* **auth:** added Token invalidation (distributed) ([670c733](https://github.com/enteocode/icf/commit/670c73377d3c9318cdc2abd2503f9710dc588e91))
+* **cache:** added CacheModule according to latest NestJS standard ([69fa1c0](https://github.com/enteocode/icf/commit/69fa1c0aa64132db609e140bb0926843fb6a9daa))
+* **openapi:** added OpenAPI documentation ([6a5b76f](https://github.com/enteocode/icf/commit/6a5b76f7e8ec48085b12b2ddeb9a5625892948fa))
+
+
+### Bug Fixes
+
+* **artwork:** fixed schema ([d7c9894](https://github.com/enteocode/icf/commit/d7c9894d7ed384718dd937ff5ac09e8f45f9da13))
+* **artwork:** fixed service (HttpModule, CacheModule) ([5c6a307](https://github.com/enteocode/icf/commit/5c6a30739c437f59e5d784c6f125859c3d33ec7f))
+* **auth:** added extra layer of security (GDPR, KeyID) ([f8dfd0e](https://github.com/enteocode/icf/commit/f8dfd0e16412cdf85f6c5d2828db60d3bc7648b1))
+* **auth:** fixed cookie authority path ([9c7316c](https://github.com/enteocode/icf/commit/9c7316c1500c928b724367b7e29b1de9c6432e86))
+* **auth:** fixed token persistence on response ([d397fd4](https://github.com/enteocode/icf/commit/d397fd41be9fb9c6e835c34881e26209274aa213))
+* **auth:** removed email address from JWT token to increase security and match GDPR standard ([09cfd84](https://github.com/enteocode/icf/commit/09cfd8417ca1a2dc37e881d5fa172a28349ea401))
+* **favorite:** fixed response schema to increase API endpoint predictability ([ba1d0e6](https://github.com/enteocode/icf/commit/ba1d0e6de1994097e1659aa8e94e07a655d27c34))
+* **uuid:** added Uuid type ([f30c4a0](https://github.com/enteocode/icf/commit/f30c4a05178f847b2c411636bf9c9a00283903d3))
+
+
+### Style
+
+* changed indentation to 4-spaces to increase readability ([80b9776](https://github.com/enteocode/icf/commit/80b9776372b3d9d2a4fea1310d721ca6889cfff1))
+
+
+### Setup
+
+* added `.env` based environment variables ([2bfeae9](https://github.com/enteocode/icf/commit/2bfeae902ac367c51ee160dbb753f6623ede8bfe))
+* added ClassSerializerInterceptor ([46ce5b9](https://github.com/enteocode/icf/commit/46ce5b957a81cfa486c665276c3cc714c5fa9deb))
+* upgraded dependencies to eliminate security and performance issues ([99116c1](https://github.com/enteocode/icf/commit/99116c18b011b20517f56543b44d26ecb239a09c))
+
+
+### Docs
+
+* updated documentation according to new features ([4d1295e](https://github.com/enteocode/icf/commit/4d1295e01843a6a46aaa94bc3a6c2f57ec240439))
+
 ## 1.0.0 (2022-10-21)
 
 
