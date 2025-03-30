@@ -12,7 +12,7 @@ export class CreateUsers1665949564977 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.manager.delete(User, this.user.getId(this.getUsername()));
+        await queryRunner.manager.delete(User, this.user.createId(this.getUsername()));
     }
 
     private getUsername(): string {

@@ -1,5 +1,7 @@
+import { Uuid } from '../uuid/uuid.type';
+
 export interface UserInterface {
-    id: string;
+    id: Uuid;
     username: string;
     password: string;
 }
