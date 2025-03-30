@@ -9,11 +9,10 @@ export class AuthTokenService {
 
     private async verify(token: string): Promise<TokenPayload> {
         try {
-            const { name, sub } = await this.jwt.verifyAsync(token);
+            const { sub } = await this.jwt.verifyAsync(token);
 
             return {
-                user: sub,
-                name
+                user: sub
             };
         } catch (e) {
             return null;
@@ -33,7 +32,7 @@ export class AuthTokenService {
         return null;
     }
 
-    public sign({ user, name }: TokenPayload): string {
-        return this.jwt.sign({ name }, { subject: user });
+    public sign({ user }: TokenPayload): string {
+        return this.jwt.sign({}, { subject: user });
     }
 }

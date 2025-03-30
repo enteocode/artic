@@ -7,7 +7,14 @@ import { EnvironmentVariables } from '../env/environment.variables';
 export class UuidService {
     constructor(private readonly config: ConfigService<EnvironmentVariables>) {}
 
-    create(seed = '', namespace = this.config.get('UUID_NAMESPACE')): string {
+    /**
+     * Generates a Universally Unique Identifier (UUID) based on random
+     * or seed.
+     *
+     * @param seed
+     * @param namespace
+     */
+    public create(seed = '', namespace = this.config.get('UUID_NAMESPACE')): string {
         if (seed) {
             return v5(seed, namespace);
         }

@@ -25,6 +25,10 @@ export class EnvironmentVariables {
     AUTH_SECRET: string;
 
     @IsOptional()
+    @IsString()
+    AUTH_ISSUER: string;
+
+    @IsOptional()
     @IsInt()
     @Type(() => Number)
     AUTH_EXPIRE: number = 300;
