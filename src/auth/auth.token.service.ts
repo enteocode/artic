@@ -20,7 +20,7 @@ export class AuthTokenService {
         }
     }
 
-    getToken(request: Request, cookieName = ''): Promise<TokenPayload> {
+    public getToken(request: Request, cookieName = ''): Promise<TokenPayload> {
         const header = request.headers.authorization;
         const cookie = request.cookies;
 
@@ -33,7 +33,7 @@ export class AuthTokenService {
         return null;
     }
 
-    sign({ user, name }: TokenPayload): string {
+    public sign({ user, name }: TokenPayload): string {
         return this.jwt.sign({ name }, { subject: user });
     }
 }

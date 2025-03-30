@@ -25,7 +25,7 @@ export class AuthTokenInterceptor implements NestInterceptor {
         private readonly registry: AuthRegistryService
     ) {}
 
-    async intercept(context: ExecutionContext, next: CallHandler<any>): Promise<Observable<any>> {
+    public async intercept(context: ExecutionContext, next: CallHandler<any>): Promise<Observable<any>> {
         const handler = context.switchToHttp();
         const req = handler.getRequest<Request>();
         const res = handler.getResponse<Response>();
@@ -39,6 +39,10 @@ export class AuthTokenInterceptor implements NestInterceptor {
         if (!token && this.registry.isAuthenticationEnabled(controller)) {
             throw new UnauthorizedException('Unauthorized request');
         }
+        if (token && req.cookies[cookie]) {
+            req.headers.authorization = `Bearer ${req.cookies[cookie]}`;
+        }
+
         // Enhancing the response object with the token
 
         Reflect.defineMetadata(SYMBOL_TOKEN, token, res);
@@ -54,7 +58,7 @@ export class AuthTokenInterceptor implements NestInterceptor {
                 })
             )
             .pipe(
-                tap(async () => {
+                tap(() => {
                     if (res.sent) {
                         const type = controller.name;
                         const call = context.getHandler().name;
