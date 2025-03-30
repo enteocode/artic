@@ -12,13 +12,16 @@ export class ArtworkController {
 
     @Get(':id')
     @Header('Cache-Control', 'max-age=3600')
-    public get(@Param('id', ParseIntPipe) id: number): Observable<ArtworkInterface> {
+    public get(@Param('id', ParseIntPipe) id: number): Promise<ArtworkInterface> {
         return this.artwork.get(id);
     }
 
     @Get()
     @Header('Cache-Control', 'max-age=3600')
-    public getAll(@Query() { limit, page }: ArtworkCollectionQuery): Observable<ArtworkInterface[]> {
-        return this.artwork.getAll(limit, page);
+    public getAll(
+        @Query('take', ParseIntPipe) take: number = 50,
+        @Query('page', ParseIntPipe) page: number = 1
+    ): Promise<ArtworkInterface[]> {
+        return this.artwork.getAll(take, page);
     }
 }

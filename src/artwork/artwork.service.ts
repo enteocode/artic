@@ -23,7 +23,7 @@ export class ArtworkService {
 
     private getResponse<T>(url: number | string, search: object = {}): Promise<T> {
         const params = { ...search, fields: this.getRequestFields() };
-        const stream = this.http.get(`/${url}`, { params }).pipe(map((response) => response.data));
+        const stream = this.http.get(`/${url}`, { params }).pipe(map((response) => response.data.data));
 
         return firstValueFrom(stream);
     }
@@ -42,11 +42,15 @@ export class ArtworkService {
         return artwork;
     }
 
-    public async getAll(limit?: number, page?: number): Promise<ArtworkInterface[]> {
-        const list = await this.getResponse<ArtworkInterface[]>('', { fields: this.getRequestFields(), limit, page });
+    public async getAll(take?: number, page?: number): Promise<ArtworkInterface[]> {
+        const list = await this.getResponse<ArtworkInterface[]>('', {
+            fields: this.getRequestFields(),
+            page,
+            limit: take
+        });
 
-        if (list.length) {
-            await Promise.all(list.map((item) => this.cache.set(String(item.id), item)));
+        if (!list.length) {
+            return list;
         }
         return list;
     }

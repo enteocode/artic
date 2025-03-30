@@ -1,8 +1,5 @@
-import { ArtworkThumbnailInterface } from './artwork.thumbnail.interface';
-
 export interface ArtworkInterface {
-    id: number;
     title: string;
+    id: number;
     artist_titles: string[];
-    thumbnail: ArtworkThumbnailInterface;
 }
