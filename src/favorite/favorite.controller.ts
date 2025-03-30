@@ -1,34 +1,26 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { FavoriteService } from './favorite.service';
-import { FavoriteCreateRequest } from './favorite.create.request';
+import { FavoriteAddRequest } from './favorite.add.request';
 import { Token } from '../auth/auth.token.decorator';
 import { TokenPayload } from '../auth/auth.token.payload';
-import { AuthUserService } from '../auth/auth.user.service';
 
 @Controller('favorites')
 export class FavoriteController {
-    constructor(
-        private readonly favorite: FavoriteService,
-        private readonly user: AuthUserService
-    ) {}
+    constructor(private readonly favorite: FavoriteService) {}
 
     @Post()
-    create(@Token() token: TokenPayload, @Body() request: FavoriteCreateRequest) {
-        return this.favorite.add(this.user.getUserByToken(token), request.artwork);
+    public add(@Token() token: TokenPayload, @Body() request: FavoriteAddRequest): Promise<number> {
+        return this.favorite.add(token.user, request.artwork);
     }
 
     @Get()
-    getAll(@Token() token: TokenPayload) {
-        return this.favorite.get(this.user.getUserByToken(token));
+    public getAll(@Token() token: TokenPayload): Promise<number[]> {
+        return this.favorite.get(token.user);
     }
 
     @Delete(':id')
-    async remove(@Token() token: TokenPayload, @Param('id', ParseIntPipe) id: number) {
-        const user = this.user.getUserByToken(token);
-        const success = await this.favorite.remove(user, id);
-
-        if (!success) {
-            throw new NotFoundException(`Favorite#${id} does not exists in your collection`);
-        }
+    public remove(@Token() token: TokenPayload, @Param('id', ParseIntPipe) artwork: number): Promise<boolean> {
+        return this.favorite.remove(token.user, artwork);
     }
 }

@@ -1,22 +1,20 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { FavoriteService } from './favorite.service';
 import { UuidModule } from '../uuid/uuid.module';
-import { AuthModule } from '../auth/auth.module';
 import { FavoriteController } from './favorite.controller';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 import { CreateFavoriteTable1666336937431 } from './migrations/1666336937431-CreateFavoriteTable';
 
 @Module({
     controllers: [FavoriteController],
-    imports: [UuidModule, AuthModule],
-    exports: [FavoriteService],
+    imports: [UuidModule],
     providers: [FavoriteService]
 })
 export class FavoriteModule implements OnModuleInit {
-    constructor(private readonly connection: Connection) {}
+    constructor(private readonly connection: DataSource) {}
 
-    onModuleInit() {
+    public onModuleInit(): void {
         this.connection.migrations.push(new CreateFavoriteTable1666336937431());
     }
 }

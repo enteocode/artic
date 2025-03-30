@@ -1,10 +1,9 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { FavoriteInterface } from './favorite.interface';
 import { UserInterface } from '../user/user.interface';
 
 @Entity()
 @Index(['user', 'artwork'], { unique: true })
-export class Favorite implements FavoriteInterface {
+export class Favorite {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
