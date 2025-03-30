@@ -1,113 +1,67 @@
 ARTIC (Example NestJS Application)
-=================================
+=====
 
-Personal list of favorite art pieces of Art Institute of Chicago (ARTIC).
+A personal collection of favorite artworks from the Art Institute of Chicago (ARTIC).
 
 ## Requirements
 
-- Node LTS (or above)
+- Node.js (LTS or later)
 - Redis 6
 - MySQL 8
 
 ## Development
 
-To start development, copy the `.env.example` file to `.env` and change values according to your setup, then simply run:
+To start development:
+
+1. Copy `.env.example` to `.env` and update values as needed.
+2. Install dependencies and start the application:
 
 ```shell
-npm i
+npm install
 npm start
 ```
 
-When all containers are ready and the Nest application has successfully started, you can access the following services 
-on `localhost`, provided you haven't changed the default ports defined in `.env`:
+Once all containers are running and the NestJS application has started successfully, the following services will be
+available on `localhost`, provided the default ports in `.env` remain unchanged:
 
-| Name                | Port   | Protocol | Availability                          |
+| Service             | Port   | Protocol | Availability                          |
 |---------------------|--------|----------|---------------------------------------|
 | **API**             | `3030` | HTTP     | -                                     |
 | **MySQL**           | `3306` | TCP      | Not publicly accessible in production |
 | **Redis**           | `6379` | TCP      | Not publicly accessible in production |
 | **Redis Commander** | `8081` | HTTP     | Not available in production           |
 
-
 ## Production
 
-To build the optimized version of the source code ready for production and start the server:
+To build and deploy the application in a production-ready state:
 
 ```shell
 $ docker-compose up
 ```
 
-## API
+The build process generates source maps alongside compiled files to facilitate debugging via the Node.js inspector.
 
-The API will be listening on `localhost`, so make sure that the port 80 is 
-free to use.
-For easier testing you can find a Postman collection under the `resources`
-directory.
+### Optimization Considerations
 
-**Everything works with JSON objects.**
+- Tree-shaking and output optimization reduce the bundle size, improving initial performance.
+- Redundant decorator helpers are removed to streamline tokenization.
+- Node.js caches source files based on content hash. Any change in the system invalidates the cache and triggers a full
+  reset.
 
-### Login 
+Given the lightweight nature of this project, these optimizations were deemed beneficial.
 
-**Endpoint**: `[POST] /api/login`
+## API Documentation
 
-Authenticates the user credentials and on success it puts a HttpOnly COOKIE to
-the response to support sticky sessions. If your client does not support 
-cookies, then you can find the token in the X-Token response header and can
-authorize each requests by
-
-```
-Authorization Bearer {Token}
-```
-
-**Schema**
-
-```json
-{
-  "username": "user1@email.com",
-  "password": "password"
-}
-```
-
-### Logout
-
-**Endpoint**: `[GET] /api/logout`
-
-This endpoint will remove the COOKIE and will return HTTP/401 Unauthorized
-header.
-
-### Artwork
-
-To retrieve a paginated collection, you can use `[GET] /api/artworks` with
-optional query parameters:
-
-- `limit`: Number of items per page
-- `page`: Number of the page (starts with 1)
-
-To retrieve an exact item, you can use `[GET] /api/artworks/{id}`.
-
-### Favorites
-
-To add an item to your personal collection call `[POST] /api/favorites`,
-with the numeric ID of the artwork. 
-
-```json
-{
-  "artwork": 66607
-}
-```
-
-To list your stored favorites call `[GET] /api/favorites` and to remove
-one call `[DELETE] /api/favorites/{id}`.
+OpenAPI documentation is available in the development environment at `/api/docs`.
 
 ## Roadmap
 
-- Introduce Swagger (Open API) for easier testing
-- Make E2E and unit-tests
-- Split documentation into separate files and use Table of Contents
+- Implement end-to-end (E2E) and unit tests.
 
 ---
 
-Copyright © 2022-2025 by [Ádám Székely][Z], All rights reserved!
+© 2022-2025 [Ádám Székely][Z]. All rights reserved.
 
 
 [Z]: https://www.linkedin.com/in/enteocode/
+
