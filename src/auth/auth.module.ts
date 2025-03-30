@@ -1,6 +1,6 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { DiscoveryModule, DiscoveryService } from '@nestjs/core';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/environment.variables';
 import { JwtModule } from '@nestjs/jwt';
 import { SecurityModule } from '../security/security.module';
@@ -34,6 +34,7 @@ import { SYMBOL_AUTH_DISABLED } from './auth.constants';
                 }
             })
         }),
+        ConfigModule,
         DiscoveryModule,
         UserModule,
         SecurityModule

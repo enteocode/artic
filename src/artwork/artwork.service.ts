@@ -15,7 +15,8 @@ export class ArtworkService {
     ) {}
 
     private getRequestFields(): Array<keyof ArtworkInterface> {
-        return ['id', 'title', 'artist_titles', 'thumbnail'];
+        return ['id', 'title', 'artist_titles'];
+    }
 
     private getCacheKey(id: number | string): string {
         return `artworks:${id}`;

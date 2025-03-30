@@ -3,6 +3,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ConfigService } from '@nestjs/config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { readPackage } from 'read-pkg';
 import { EnvironmentVariables } from './env/environment.variables';
 
 import helmet from '@fastify/helmet';
@@ -14,6 +16,27 @@ async function bootstrap() {
     app.setGlobalPrefix('api');
     app.useGlobalPipes(new ValidationPipe({ transform: true, forbidUnknownValues: true }));
 
+    // OpenAPI (for development only)
+    //
+    // We are using direct referencing and value in order to let optimization process
+    // remove it completely in production builds
+
+    if (process.env.NODE_ENV === 'development') {
+        const meta = await readPackage();
+        const docs = new DocumentBuilder()
+            .setTitle('ARTIC')
+            .setDescription(meta.description)
+            .setVersion(meta.version)
+            .addBearerAuth()
+            .build();
+
+        SwaggerModule.setup('api/docs', app, () => {
+            return SwaggerModule.createDocument(app, docs);
+        });
+    }
+
+    // Fastify extensions
+
     const config = app.get(ConfigService<EnvironmentVariables>);
 
     await app.register(cookie, { secret: config.get<string>('AUTH_SECRET') });
@@ -21,8 +44,8 @@ async function bootstrap() {
 
     // Starting the server
 
-    const host = config.get('SERVER_HOST');
-    const port = config.get('SERVER_PORT');
+    const host = config.get<string>('SERVER_HOST');
+    const port = config.get<number>('SERVER_PORT');
 
     await app.listen(port, host);
 }
