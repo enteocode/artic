@@ -1,24 +1,24 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Keyv } from '@keyv/redis';
 import { HttpService } from '@nestjs/axios';
-import { Cache, CACHE_MANAGER, CacheKey } from '@nestjs/cache-manager';
 import { ArtworkInterface } from './artwork.interface';
-import { UrlSearchInterface } from '../url/url.search.interface';
-import { Observable } from 'rxjs';
+import { KeyvEntry } from 'keyv';
 import { map } from 'rxjs/operators';
 import { firstValueFrom } from 'rxjs';
+import { CACHE_INSTANCE } from '../cache/cache.constants';
 
-@CacheKey('artwork')
 @Injectable()
 export class ArtworkService {
     constructor(
-        private readonly http: HttpService,
-        private readonly url: UrlService
-        @Inject(CACHE_MANAGER) private readonly cache: Cache,
+        @Inject(CACHE_INSTANCE) private cache: Keyv,
         private readonly http: HttpService
     ) {}
 
     private getRequestFields(): Array<keyof ArtworkInterface> {
         return ['id', 'title', 'artist_titles', 'thumbnail'];
+
+    private getCacheKey(id: number | string): string {
+        return `artworks:${id}`;
     }
 
     private getResponse<T>(url: number | string, search: object = {}): Promise<T> {
@@ -29,7 +29,8 @@ export class ArtworkService {
     }
 
     public async get(id: number): Promise<ArtworkInterface> {
-        const cached = await this.cache.get<ArtworkInterface>(String(id));
+        const stored = this.getCacheKey(id);
+        const cached = await this.cache.get<ArtworkInterface>(stored);
 
         if (cached) {
             return cached;
@@ -37,7 +38,7 @@ export class ArtworkService {
         const artwork = await this.getResponse<ArtworkInterface>(id);
 
         if (artwork) {
-            await this.cache.set(String(id), artwork);
+            await this.cache.set(stored, artwork);
         }
         return artwork;
     }
@@ -52,6 +53,13 @@ export class ArtworkService {
         if (!list.length) {
             return list;
         }
+        const entries: KeyvEntry[] = list.map<KeyvEntry>((item) => ({
+            key: this.getCacheKey(item.id),
+            value: item
+        }));
+
+        await this.cache.setMany(entries);
+
         return list;
     }
 }

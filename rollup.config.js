@@ -55,16 +55,16 @@ export default {
     },
     external: [
         /^@nestjs\//,
-        /^@fastify/,
+        /^@keyv\//,
+        /^@fastify\//,
 
         'helmet',
         'class-transformer',
         'class-validator',
         'typeorm',
         'bcrypt',
-        'cache-manager-ioredis',
         'fastify',
-        'ioredis',
+        'read-pkg',
         'uuid',
         'rxjs',
         'rxjs/operators'
