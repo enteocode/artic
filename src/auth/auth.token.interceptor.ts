@@ -36,7 +36,10 @@ export class AuthTokenInterceptor implements NestInterceptor {
         const cookie = this.config.get<string>('AUTH_COOKIE');
         const token = await this.token.getToken(req, cookie);
 
-        if (!token && this.registry.isAuthenticationEnabled(controller)) {
+        if (!this.registry.isAuthenticationEnabled(controller)) {
+            return next.handle();
+        }
+        if (!token) {
             throw new UnauthorizedException('Unauthorized request');
         }
         if (token && req.cookies[cookie]) {

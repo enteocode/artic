@@ -15,6 +15,7 @@ async function bootstrap() {
 
     app.setGlobalPrefix('api');
     app.useGlobalPipes(new ValidationPipe({ transform: true, forbidUnknownValues: true }));
+    app.enableShutdownHooks();
 
     // OpenAPI (for development only)
     //
