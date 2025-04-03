@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/enteocode/artic/compare/v2.0.0...v2.1.0) (2025-04-03)
+
+
+### Features
+
+* **health:** added health-check for testing node status ([3cf74c3](https://github.com/enteocode/artic/commit/3cf74c3638306238418c90c4e958da6429783573))
+
+
+### Bug Fixes
+
+* **artwork:** fixed cache injection ([c79c516](https://github.com/enteocode/artic/commit/c79c5166179e007c000a4fd9611dbeb9dc9a6832))
+* **auth:** fixed public route validation ([c364dc1](https://github.com/enteocode/artic/commit/c364dc12057027ae7843523e147aebab44546b24))
+
 ## [2.0.0](https://github.com/enteocode/icf/compare/v1.0.0...v2.0.0) (2025-03-30)
 
 
