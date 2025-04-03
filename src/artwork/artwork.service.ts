@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Keyv } from '@keyv/redis';
+import { Cacheable } from 'cacheable';
 import { HttpService } from '@nestjs/axios';
 import { ArtworkInterface } from './artwork.interface';
 import { KeyvEntry } from 'keyv';
@@ -10,7 +10,7 @@ import { CACHE_INSTANCE } from '../cache/cache.constants';
 @Injectable()
 export class ArtworkService {
     constructor(
-        @Inject(CACHE_INSTANCE) private cache: Keyv,
+        @Inject(CACHE_INSTANCE) private cache: Cacheable,
         private readonly http: HttpService
     ) {}
 

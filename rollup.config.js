@@ -62,6 +62,7 @@ export default {
         'class-transformer',
         'class-validator',
         'typeorm',
+        'cacheable',
         'bcrypt',
         'fastify',
         'read-pkg',
