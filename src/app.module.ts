@@ -10,6 +10,7 @@ import { AuthTokenInterceptor } from './auth/auth.token.interceptor';
 import { ArtworkModule } from './artwork/artwork.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { Favorite } from './favorite/favorite.entity';
+import { HealthModule } from './health/health.module';
 
 import { validate } from './env/environment.validation';
 
@@ -34,6 +35,7 @@ import { validate } from './env/environment.validation';
                 retryAttempts: 3
             })
         }),
+        HealthModule,
         AuthModule,
         ArtworkModule,
         FavoriteModule
