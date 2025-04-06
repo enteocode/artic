@@ -1,11 +1,7 @@
-import { Module, OnModuleInit } from '@nestjs/common';
-import { APP_INTERCEPTOR, DiscoveryModule, DiscoveryService } from '@nestjs/core';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { EnvironmentVariables } from '../env/environment.variables';
-import { JwtModule } from '@nestjs/jwt';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { Module } from '@nestjs/common';
 import { SecurityModule } from '../security/security.module';
 import { UserModule } from '../user/user.module';
-import { AuthRegistryService } from './auth.registry.service';
 import { AuthTokenService } from './auth.token.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -42,26 +38,7 @@ import { SYMBOL_AUTH_DISABLED } from './auth.constants';
             useClass: AuthTokenInterceptor
         },
         AuthService,
-        AuthTokenService,
-        AuthRegistryService
+        AuthTokenService
     ]
 })
-export class AuthModule implements OnModuleInit {
-    constructor(
-        private readonly registry: AuthRegistryService,
-        private readonly discovery: DiscoveryService
-    ) {}
-
-    onModuleInit() {
-        const controllers = this.discovery.getControllers();
-
-        controllers.forEach(({ instance, metatype }) => {
-            const meta = Reflect.getMetadata(SYMBOL_AUTH_DISABLED, metatype);
-
-            if (!meta) {
-                return;
-            }
-            this.registry.register(instance.constructor);
-        });
-    }
-}
+export class AuthModule {}

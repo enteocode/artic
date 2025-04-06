@@ -7,22 +7,21 @@ import {
     UnauthorizedException
 } from '@nestjs/common';
 import { Observable, throwError } from 'rxjs';
-import { AuthTokenService } from './auth.token.service';
-import { AuthRegistryService } from './auth.registry.service';
+import { Reflector } from '@nestjs/core';
 import { FastifyRequest as Request, FastifyReply as Response } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/environment.variables';
 import { catchError, tap } from 'rxjs/operators';
-import { SYMBOL_TOKEN } from './auth.constants';
+import { SYMBOL_AUTH_DISABLED, SYMBOL_TOKEN } from './auth.constants';
 
 @Injectable()
 export class AuthTokenInterceptor implements NestInterceptor {
     private readonly logger = new Logger(AuthTokenInterceptor.name);
 
     constructor(
+        private readonly reflector: Reflector,
         private readonly config: ConfigService<EnvironmentVariables>,
         private readonly token: AuthTokenService,
-        private readonly registry: AuthRegistryService
     ) {}
 
     public async intercept(context: ExecutionContext, next: CallHandler<any>): Promise<Observable<any>> {
@@ -34,20 +33,22 @@ export class AuthTokenInterceptor implements NestInterceptor {
         // Trying to get the Token from Authorization header or COOKIE
 
         const cookie = this.config.get<string>('AUTH_COOKIE');
+        const disabled = this.reflector.getAllAndOverride(SYMBOL_AUTH_DISABLED, [context.getHandler(), controller]);
         const token = await this.token.getToken(req, cookie);
 
-        if (this.registry.isAuthenticationEnabled(controller)) {
+        if (!disabled) {
             if (!token) {
                 throw new UnauthorizedException('Unauthorized request');
             }
             if (token && req.cookies[cookie]) {
                 req.headers.authorization = `Bearer ${req.cookies[cookie]}`;
             }
-            // Enhancing the response object with the token to let it retrieve
-            // by the decorator
-
-            Reflect.defineMetadata(SYMBOL_TOKEN, token, res);
         }
+        // Enhancing the response object with the token to let it retrieve
+        // by the decorator
+
+        Reflect.defineMetadata(SYMBOL_TOKEN, token, res);
+
         return next
             .handle()
             .pipe(
