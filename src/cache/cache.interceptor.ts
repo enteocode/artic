@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 import { FastifyReply as Response, FastifyRequest as Request } from 'fastify';
 import { CacheService } from './cache.service';
 import { TokenService } from '../token/token.service';
-import { CACHE_DECORATOR, CACHE_TTL_DYNAMIC } from './cache.constants';
+import { CACHE_DECORATOR, CACHE_RECORD_SEPARATOR, CACHE_TTL_DYNAMIC } from './cache.constants';
 
 @Injectable()
 export class CacheInterceptor implements NestInterceptor {
@@ -33,7 +33,7 @@ export class CacheInterceptor implements NestInterceptor {
         }
         const token = await this.token.getToken(req);
         const prev = req.headers['if-none-match'];
-        const refs = [req.url.toLowerCase(), token && token.uuid].filter(Boolean).join(':');
+        const refs = [req.url.toLowerCase(), token && token.uuid].filter(Boolean).join(CACHE_RECORD_SEPARATOR);
         const etag = this.cache.createETag(refs);
 
         res.header('ETag', etag);
