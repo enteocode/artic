@@ -3,16 +3,15 @@ import { Reflector } from '@nestjs/core';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { FastifyReply as Response, FastifyRequest as Request } from 'fastify';
-import { HashService } from '../hash/hash.service';
+import { CacheService } from './cache.service';
 import { TokenService } from '../token/token.service';
-import { TokenPayload } from '../token/token.payload';
 import { CACHE_DECORATOR, CACHE_TTL_DYNAMIC } from './cache.constants';
 
 @Injectable()
 export class CacheInterceptor implements NestInterceptor {
     constructor(
         private readonly reflector: Reflector,
-        private readonly hash: HashService,
+        private readonly cache: CacheService,
         private readonly token: TokenService
     ) {}
 
@@ -34,7 +33,8 @@ export class CacheInterceptor implements NestInterceptor {
         }
         const token = await this.token.getToken(req);
         const prev = req.headers['if-none-match'];
-        const etag = this.createETag(req.url, token);
+        const refs = [req.url.toLowerCase(), token && token.uuid].filter(Boolean).join(':');
+        const etag = this.cache.createETag(refs);
 
         res.header('ETag', etag);
 
@@ -47,12 +47,5 @@ export class CacheInterceptor implements NestInterceptor {
             );
         }
         return next.handle();
-    }
-
-    private createETag(url: string, token: TokenPayload = null): string {
-        const base = [url.toLowerCase(), token && token.uuid].filter(Boolean).join(':');
-        const hash = this.hash.create(base);
-
-        return hash.toString('base64url');
     }
 }

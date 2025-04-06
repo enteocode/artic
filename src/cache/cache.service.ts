@@ -36,6 +36,6 @@ export class CacheService {
      * @param input
      */
     public createETag(input: string): string {
-        return this.hash.create(input).toString('base64');
+        return this.hash.create(input).toString('base64url');
     }
 }
