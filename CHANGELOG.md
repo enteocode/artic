@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.2](https://github.com/enteocode/artic/compare/v2.1.1...v2.1.2) (2025-04-06)
+
+
+### Bug Fixes
+
+* **cache:** fixed record separation to avoid data collision ([65576b6](https://github.com/enteocode/artic/commit/65576b6e2d7032a0407c1eeef5ce2a31b8b66e2a))
+* **cache:** fixed redundancy of ETag creator method ([31d314b](https://github.com/enteocode/artic/commit/31d314b7d100281837bc34eee07af51e6bd8ead4))
+* **token:** fixed logger access ([8846d01](https://github.com/enteocode/artic/commit/8846d01ddcb1440e09dad09c1b76410c7e745609))
+
 ### [2.1.1](https://github.com/enteocode/artic/compare/v2.1.0...v2.1.1) (2025-04-06)
 
 
