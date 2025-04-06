@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/enteocode/artic/compare/v2.1.0...v2.1.1) (2025-04-06)
+
+
+### Bug Fixes
+
+* **auth:** fixed authorization ([39b6abd](https://github.com/enteocode/artic/commit/39b6abd672b8b6de87e7eb880f911c970f48c93b))
+* **auth:** fixed endpoint authentication ([387eb15](https://github.com/enteocode/artic/commit/387eb15645827a383fa8141b992adccc45cd500e))
+* **cache:** fixed cache dynamism by introducing session based ETag ([3323f8e](https://github.com/enteocode/artic/commit/3323f8e4ff1a7ec885e920c3dafca3ae8ee45b90))
+* **email-address:** fixed transformer to comply with the RFC 5322 standard ([ced3ace](https://github.com/enteocode/artic/commit/ced3acedbfe425cb0681a3d775da8ea99c31b450))
+* **favorite:** fixed error logging ([abad8ae](https://github.com/enteocode/artic/commit/abad8ae83cc5a5755b12071f7d0cf474483eedba))
+* **uuid:** fixed type to `Uuid` ([98c8607](https://github.com/enteocode/artic/commit/98c8607680a3781f6e1f3458c8e2a2899ef73353))
+
+
+### Docs
+
+* added instructions for default user in non-production environments ([c92b6db](https://github.com/enteocode/artic/commit/c92b6db3bc3c477a1fcb63a9f23b250f7f2caf18))
+
 ## [2.1.0](https://github.com/enteocode/artic/compare/v2.0.0...v2.1.0) (2025-04-03)
 
 
