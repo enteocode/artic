@@ -31,6 +31,17 @@ available on `localhost`, provided the default ports in `.env` remain unchanged:
 | **Redis**           | `6379` | TCP      | Not publicly accessible in production |
 | **Redis Commander** | `8081` | HTTP     | Not available in production           |
 
+### Authorization
+
+A user created by default in non-production environments:
+
+- Username: `user@example.com`
+- Password: `password`
+
+### API Documentation
+
+OpenAPI documentation is available in the development environment at `/api/docs`.
+
 ## Production
 
 To build and deploy the application in a production-ready state:
@@ -49,10 +60,6 @@ The build process generates source maps alongside compiled files to facilitate d
   reset.
 
 Given the lightweight nature of this project, these optimizations were deemed beneficial.
-
-## API Documentation
-
-OpenAPI documentation is available in the development environment at `/api/docs`.
 
 ## Roadmap
 
