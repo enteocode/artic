@@ -1,4 +1,4 @@
-import { TokenPayload } from './auth.token.payload';
+import { TokenPayload } from '../token/token.payload';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class AuthLoginResponse implements TokenPayload {

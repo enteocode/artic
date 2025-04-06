@@ -1,6 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { FastifyReply as Response } from 'fastify';
-import { TokenPayload } from './auth.token.payload';
+import { TokenPayload } from '../token/token.payload';
 import { SYMBOL_TOKEN } from './auth.constants';
 
 export type Authorizer = (token: TokenPayload) => TokenPayload;

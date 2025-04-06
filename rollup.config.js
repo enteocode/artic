@@ -69,7 +69,8 @@ export default {
         'read-pkg',
         'uuid',
         'rxjs',
-        'rxjs/operators'
+        'rxjs/operators',
+        'xxhash-wasm'
     ],
     watch: {
         buildDelay: 600

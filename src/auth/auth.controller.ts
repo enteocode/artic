@@ -7,11 +7,11 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthTokenService } from './auth.token.service';
 import { AuthLoginResponse } from './auth.login.response';
 import { Token } from './auth.token.decorator';
-import { TokenPayload } from './auth.token.payload';
+import { TokenPayload } from '../token/token.payload';
 
-@DisableAuthentication()
-@Controller('auth')
 @ApiTags('Authentication')
+@Controller('auth')
+@DisableAuthentication()
 export class AuthController {
     constructor(
         private readonly service: AuthService,

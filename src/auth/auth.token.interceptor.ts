@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { Observable, throwError } from 'rxjs';
 import { Reflector } from '@nestjs/core';
+import { TokenService } from '../token/token.service';
 import { FastifyRequest as Request, FastifyReply as Response } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/environment.variables';
@@ -21,7 +22,7 @@ export class AuthTokenInterceptor implements NestInterceptor {
     constructor(
         private readonly reflector: Reflector,
         private readonly config: ConfigService<EnvironmentVariables>,
-        private readonly token: AuthTokenService,
+        private readonly token: TokenService
     ) {}
 
     public async intercept(context: ExecutionContext, next: CallHandler<any>): Promise<Observable<any>> {

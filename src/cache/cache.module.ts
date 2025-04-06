@@ -1,13 +1,17 @@
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/environment.variables';
 import { createKeyv } from '@keyv/redis';
+import { TokenModule } from '../token/token.module';
+import { HashModule } from '../hash/hash.module';
 import { Cacheable } from 'cacheable';
 import { CacheService } from './cache.service';
+import { CacheInterceptor } from './cache.interceptor';
 import { CACHE_INSTANCE } from './cache.constants';
 
 @Module({
-    imports: [ConfigModule],
+    imports: [ConfigModule, TokenModule, HashModule],
     exports: [CACHE_INSTANCE, CacheService],
     providers: [
         {
@@ -31,6 +35,10 @@ import { CACHE_INSTANCE } from './cache.constants';
 
                 return cache;
             }
+        },
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: CacheInterceptor
         },
         CacheService
     ]

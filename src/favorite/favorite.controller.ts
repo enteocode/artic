@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FavoriteService } from './favorite.service';
 import { FavoriteAddRequest } from './favorite.add.request';
 import { Token } from '../auth/auth.token.decorator';
-import { TokenPayload } from '../auth/auth.token.payload';
+import { TokenPayload } from '../token/token.payload';
 
 @ApiTags('Favorites')
 @ApiBearerAuth()

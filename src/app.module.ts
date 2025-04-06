@@ -10,6 +10,7 @@ import { ArtworkModule } from './artwork/artwork.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { Favorite } from './favorite/favorite.entity';
 import { HealthModule } from './health/health.module';
+import { CacheModule } from './cache/cache.module';
 
 import { validate } from './env/environment.validation';
 
@@ -37,7 +38,8 @@ import { validate } from './env/environment.validation';
         HealthModule,
         AuthModule,
         ArtworkModule,
-        FavoriteModule
+        FavoriteModule,
+        CacheModule
     ],
     providers: [
         {
