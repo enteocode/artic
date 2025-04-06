@@ -8,7 +8,7 @@ import { UuidService } from '../uuid/uuid.service';
 
 @Injectable()
 export class TokenService {
-    private logger = new Logger(TokenService.name);
+    private readonly logger = new Logger(TokenService.name);
 
     constructor(
         private readonly config: ConfigService<EnvironmentVariables>,
