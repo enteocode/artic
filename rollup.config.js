@@ -62,6 +62,7 @@ export default {
         'class-transformer',
         'class-validator',
         'typeorm',
+        'email-addresses',
         'cacheable',
         'bcrypt',
         'fastify',
