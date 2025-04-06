@@ -50,7 +50,7 @@ export class FavoriteService {
         try {
             await this.manager.remove(Favorite, { id: this.createId(user, artwork) } as Favorite);
         } catch (e) {
-            console.log('ERROR', e);
+            this.logger.error(e.message);
             return false;
         }
         return true;
