@@ -33,6 +33,7 @@ export class AuthController {
         });
     }
 
+    @ApiOperation({ summary: 'Logout', description: 'Invalidates the stateless session' })
     @Get('logout')
     public async logout(@Token() token: TokenPayload) {
         await this.token.invalidate(token);

@@ -36,20 +36,18 @@ export class AuthTokenInterceptor implements NestInterceptor {
         const cookie = this.config.get<string>('AUTH_COOKIE');
         const token = await this.token.getToken(req, cookie);
 
-        if (!this.registry.isAuthenticationEnabled(controller)) {
-            return next.handle();
-        }
-        if (!token) {
-            throw new UnauthorizedException('Unauthorized request');
-        }
-        if (token && req.cookies[cookie]) {
-            req.headers.authorization = `Bearer ${req.cookies[cookie]}`;
-        }
+        if (this.registry.isAuthenticationEnabled(controller)) {
+            if (!token) {
+                throw new UnauthorizedException('Unauthorized request');
+            }
+            if (token && req.cookies[cookie]) {
+                req.headers.authorization = `Bearer ${req.cookies[cookie]}`;
+            }
+            // Enhancing the response object with the token to let it retrieve
+            // by the decorator
 
-        // Enhancing the response object with the token
-
-        Reflect.defineMetadata(SYMBOL_TOKEN, token, res);
-
+            Reflect.defineMetadata(SYMBOL_TOKEN, token, res);
+        }
         return next
             .handle()
             .pipe(
@@ -72,7 +70,12 @@ export class AuthTokenInterceptor implements NestInterceptor {
 
                         return;
                     }
-                    const signed = this.token.sign(Reflect.getMetadata(SYMBOL_TOKEN, res));
+                    const token = Reflect.getMetadata(SYMBOL_TOKEN, res);
+
+                    if (!token) {
+                        return;
+                    }
+                    const signed = this.token.sign(token);
                     const expire = this.config.get<number>('AUTH_EXPIRE');
 
                     // Sending back the token for stateless requests

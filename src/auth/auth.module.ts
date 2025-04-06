@@ -1,5 +1,5 @@
 import { Module, OnModuleInit } from '@nestjs/common';
-import { DiscoveryModule, DiscoveryService } from '@nestjs/core';
+import { APP_INTERCEPTOR, DiscoveryModule, DiscoveryService } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/environment.variables';
 import { JwtModule } from '@nestjs/jwt';
@@ -9,9 +9,9 @@ import { AuthRegistryService } from './auth.registry.service';
 import { AuthTokenService } from './auth.token.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { AuthUserService } from './auth.user.service';
 import { UuidModule } from '../uuid/uuid.module';
 import { CacheModule } from '../cache/cache.module';
+import { AuthTokenInterceptor } from './auth.token.interceptor';
 import { SYMBOL_AUTH_DISABLED } from './auth.constants';
 
 @Module({
@@ -36,8 +36,15 @@ import { SYMBOL_AUTH_DISABLED } from './auth.constants';
         UserModule,
         SecurityModule
     ],
-    exports: [AuthService, AuthTokenService, AuthRegistryService, AuthUserService],
-    providers: [AuthService, AuthTokenService, AuthRegistryService, AuthUserService]
+    providers: [
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: AuthTokenInterceptor
+        },
+        AuthService,
+        AuthTokenService,
+        AuthRegistryService
+    ]
 })
 export class AuthModule implements OnModuleInit {
     constructor(
