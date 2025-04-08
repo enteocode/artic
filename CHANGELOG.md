@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.4](https://github.com/enteocode/artic/compare/v2.1.3...v2.1.4) (2025-04-08)
+
+
+### Setup
+
+* updated dependencies ([711c44b](https://github.com/enteocode/artic/commit/711c44b50c3a2c25d4661d1aa0d9ebc566601a8b))
+
+
+### Style
+
+* fixed bootstrap code according to Clean-Code (SRP) principles ([7191955](https://github.com/enteocode/artic/commit/7191955fa1c65021e8726d2d0166da8cbc61a0d1))
+
+
+### Docs
+
+* added technical decisions reasoning ([8adc4c7](https://github.com/enteocode/artic/commit/8adc4c74e2e78ceb724f399ec10a72845615dd96))
+* fixed links of renamed repository in `CHANGELOG` ([6ad95bb](https://github.com/enteocode/artic/commit/6ad95bbbdc8b5dee93bb05ff34cf2e307ed2f56c))
+
 ### [2.1.3](https://github.com/enteocode/artic/compare/v2.1.2...v2.1.3) (2025-04-08)
 
 
