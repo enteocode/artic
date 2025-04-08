@@ -54,9 +54,12 @@ const getTarget = (isProduction) => {
     return isProduction ? './dist/app.js' : './dist/dev.js';
 };
 
-// Configuration
-
-export default {
+/**
+ * Build process configurations
+ *
+ * @type import('rollup').RollupOptions
+ */
+const config = {
     input: './src/main.ts',
     output: {
         file: getTarget(isProduction),
@@ -85,8 +88,10 @@ export default {
         'xxhash-wasm'
     ],
     watch: {
-        buildDelay: 600
+        buildDelay: 300,
     },
     plugins: getPlugins(isProduction),
     cache
 };
+
+export default config;
