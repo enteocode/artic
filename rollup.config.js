@@ -1,5 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
 import run from '@rollup/plugin-run';
+import replace from '@rollup/plugin-replace';
 import terser from '@rollup/plugin-terser';
 
 /*
@@ -28,7 +29,18 @@ const getPlugins = (isProduction) => {
     const plugins = [typescript()];
 
     if (isProduction) {
-        plugins.push(terser({ keep_classnames: true, toplevel: true }));
+        plugins.push(
+            replace({
+                preventAssignment: true,
+                values: {
+                    'process.env.NODE_ENV': '"production"'
+                },
+                sourceMap: true
+            }),
+            terser({
+                keep_classnames: true,
+                toplevel: true
+            }));
     } else {
         plugins.push(run({ args: ['--enable-source-maps'] }));
     }

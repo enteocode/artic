@@ -4,7 +4,6 @@ import { AppModule } from './app.module';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { readPackage } from 'read-pkg';
 import { EnvironmentVariables } from './env/environment.variables';
 
 import helmet from '@fastify/helmet';
@@ -23,6 +22,8 @@ async function bootstrap() {
     // remove it completely in production builds
 
     if (process.env.NODE_ENV === 'development') {
+        const { readPackage } = await import('read-pkg');
+
         const meta = await readPackage();
         const docs = new DocumentBuilder()
             .setTitle('ARTIC')
