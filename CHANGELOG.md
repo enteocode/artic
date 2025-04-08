@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.3](https://github.com/enteocode/artic/compare/v2.1.2...v2.1.3) (2025-04-08)
+
+
+### Bug Fixes
+
+* **hash:** added return type to instance provider factory ([09881d9](https://github.com/enteocode/artic/commit/09881d9eb8333ea504b8f4baafa2d14a8b15b54d))
+* **health:** added return type ([abde486](https://github.com/enteocode/artic/commit/abde4860507fb224ebcaa28439180f9fc002b73b))
+
+
+### Setup
+
+* fixed `read-pkg` import to avoid inclusion for production build ([e8e635c](https://github.com/enteocode/artic/commit/e8e635c0ca38152f6ab2743aefcb1d2da399236b))
+
+
+### Style
+
+* **health:** fixed Prettier warning ([9203307](https://github.com/enteocode/artic/commit/9203307a1293346e476211a12695c5920a4d1c75))
+* **health:** fixed tag name in OpenAPI ([f92c90e](https://github.com/enteocode/artic/commit/f92c90e10b8b994b28ff562ef9905cb6fe08d5ea))
+
 ### [2.1.2](https://github.com/enteocode/artic/compare/v2.1.1...v2.1.2) (2025-04-06)
 
 
