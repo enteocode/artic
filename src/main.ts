@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ConfigService } from '@nestjs/config';
@@ -22,21 +22,8 @@ async function bootstrap() {
     // remove it completely in production builds
 
     if (process.env.NODE_ENV === 'development') {
-        const { readPackage } = await import('read-pkg');
-
-        const meta = await readPackage();
-        const docs = new DocumentBuilder()
-            .setTitle('ARTIC')
-            .setDescription(meta.description)
-            .setVersion(meta.version)
-            .addBearerAuth()
-            .build();
-
-        SwaggerModule.setup('api/docs', app, () => {
-            return SwaggerModule.createDocument(app, docs);
-        });
+        await addOpenApiDocumentation(app);
     }
-
     // Fastify extensions
 
     const config = app.get(ConfigService<EnvironmentVariables>);
@@ -50,6 +37,22 @@ async function bootstrap() {
     const port = config.get<number>('SERVER_PORT');
 
     await app.listen(port, host);
+}
+
+async function addOpenApiDocumentation(app: INestApplication): Promise<void> {
+    const { readPackage } = await import('read-pkg');
+
+    const meta = await readPackage();
+    const docs = new DocumentBuilder()
+        .setTitle('ARTIC')
+        .setDescription(meta.description)
+        .setVersion(meta.version)
+        .addBearerAuth()
+        .build();
+
+    SwaggerModule.setup('api/docs', app, () => {
+        return SwaggerModule.createDocument(app, docs);
+    });
 }
 
 void bootstrap();
