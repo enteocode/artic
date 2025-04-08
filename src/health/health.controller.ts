@@ -1,10 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
 import { HealthCheck, HealthCheckService, TypeOrmHealthIndicator } from '@nestjs/terminus';
 import { HealthService } from './health.service';
+import { ApiTags } from '@nestjs/swagger';
 import { DisableAuthentication } from '../auth/auth.disable-authentication.decorator';
 
 @DisableAuthentication()
 @Controller('health')
+@ApiTags('Health Check')
 export class HealthController {
     constructor(
         private readonly health: HealthCheckService,
