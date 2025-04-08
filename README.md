@@ -13,11 +13,11 @@ A personal collection of favorite artworks from the Art Institute of Chicago (AR
 
 To start development:
 
-1. Copy `.env.example` to `.env` and update values as needed.
-2. Install dependencies and start the application:
+1. Copy `.env.example` to `.env` and update values as needed
+2. Install dependencies and start the application
 
 ```shell
-npm install
+npm i
 npm start
 ```
 
@@ -33,7 +33,7 @@ available on `localhost`, provided the default ports in `.env` remain unchanged:
 
 ### Authorization
 
-A user created by default in non-production environments:
+A user is created by default in non-production environments:
 
 - Username: `user@example.com`
 - Password: `password`
@@ -52,14 +52,28 @@ $ docker-compose up
 
 The build process generates source maps alongside compiled files to facilitate debugging via the Node.js inspector.
 
-### Optimization Considerations
+## Technical Decisions Made
 
-- Tree-shaking and output optimization reduce the bundle size, improving initial performance.
-- Redundant decorator helpers are removed to streamline tokenization.
-- Node.js caches source files based on content hash. Any change in the system invalidates the cache and triggers a full
-  reset.
+### Rollup
 
-Given the lightweight nature of this project, these optimizations were deemed beneficial.
+Using the latest `rollup` offers several key advantages:
+
+- Tree-shaking of imports and unused class methods reduces bundle size, improving initial performance
+- Its native implementation delivers fast compilation
+- Redundant decorator helpers are removed, streamlining tokenization
+- Node.js caches source files based on content hash—any change in the system invalidates the cache and triggers a full reset
+
+This bundler performs significantly better and produces no boilerplate code compared to Webpack. Its native 
+implementation outperforms Bun and its mature plugin ecosystem and active community made it the best fit for this
+backend project.
+
+Webpack is more suitable for asset handling (e.g. images, CSS preprocessors), but that's irrelevant in a backend-focused
+setup like this.
+
+### MySQL/MariaDB
+
+Postgres is more robust and feature-rich overall, but the MyISAM engine (used by default in MySQL/MariaDB alongside the
+optional InnoDB) performs better with smaller datasets due to its memory-first design.
 
 ## Roadmap
 
