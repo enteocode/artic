@@ -16,10 +16,7 @@ export class HealthController {
 
     @HealthCheck()
     @Get()
-        return this.health.check([
-            () => this.db.pingCheck('database'),
-            () => this.service.pingCache('cache')
-        ])
     public check(): Promise<HealthCheckResult> {
+        return this.health.check([() => this.db.pingCheck('database'), () => this.service.pingCache('cache')]);
     }
 }
